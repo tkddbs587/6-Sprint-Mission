@@ -59,10 +59,18 @@ input {
   outline-color: #3692ff;
 }
 
+.error {
+  color: red;
+}
+
+.input_error {
+  border: 1px solid red;
+}
+
 .password_icon {
   position: absolute;
+  top: 54px;
   right: 24px;
-  bottom: 16px;
 }
 
 button {
@@ -75,6 +83,15 @@ button {
   height: 56px;
   background-color: #3692ff;
   cursor: pointer;
+}
+
+button:disabled {
+  background-color: #9ca3af;
+}
+
+button a {
+  text-decoration: none;
+  color: #ffffff;
 }
 
 .social_login {
