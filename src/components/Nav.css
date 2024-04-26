@@ -1,0 +1,41 @@
+.Nav {
+  max-width: 1920px;
+  width: 100%;
+  background-color: #ffffff;
+  position: fixed;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 200px;
+  border-bottom: 1px solid #dfdfdf;
+}
+
+.Nav_left {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.Nav_left > h3 {
+  color: #3692ff;
+}
+
+.panda_logo {
+  width: 153px;
+  height: 51px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+}
+
+.Nav_left > span {
+  font-size: 18px;
+  font-weight: 700;
+  color: #4b5563;
+}
