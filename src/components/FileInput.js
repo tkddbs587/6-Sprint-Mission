@@ -22,7 +22,7 @@ const FileInput = () => {
         placeholder="이미지 등록"
         onChange={handleChange}
       />
-      <img src={preview} alt="이미지 미리보기" />
+      {/* <img src={preview} alt="이미지 미리보기" /> */}
     </>
   );
 };
