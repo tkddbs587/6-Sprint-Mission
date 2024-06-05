@@ -12,19 +12,19 @@ const ArticlesHeader = () => {
           글쓰기
         </Link>
       </div>
+      <Image
+        className={styles.search_icon}
+        src="/images/search_icon.svg"
+        width={24}
+        height={24}
+        alt="검색아이콘"
+      />
       <div className={styles.section_bottom}>
-        <div className={styles.section_input}>
-          <Image
-            src="/images/search_icon.svg"
-            width={24}
-            height={24}
-            alt="검색아이콘"
-          />
-          <input
-            placeholder="검색할 상품을 입력해주세요"
-            // onChange={handleInputChange}
-          />
-        </div>
+        <input
+          placeholder="검색할 상품을 입력해주세요"
+          // onChange={handleInputChange}
+        />
+
         <Dropdown />
       </div>
     </div>

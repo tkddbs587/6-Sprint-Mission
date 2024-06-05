@@ -10,26 +10,28 @@ const BestArticleCard = ({ item }) => {
 
   return (
     <div className={styles.BestArticleCard}>
-      <Image
-        src="/images/img_best_badge.svg"
-        width={102}
-        height={30}
-        alt="베스트게시글뱃지"
-      />
-      <div className={styles.article_top}>
-        <div className={styles.title}>{title}</div>
-        {image ? (
-          <div className={styles.image}>
-            <Image
-              src={image}
-              width={48}
-              height={44.57}
-              alt="베스트게시글이미지"
-            />
-          </div>
-        ) : (
-          ""
-        )}
+      <div className={styles.section_top}>
+        <Image
+          src="/images/img_best_badge.svg"
+          width={102}
+          height={30}
+          alt="베스트게시글뱃지"
+        />
+        <div className={styles.article_top}>
+          <div className={styles.title}>{title}</div>
+          {image ? (
+            <div className={styles.image}>
+              <Image
+                src={image}
+                width={48}
+                height={44.57}
+                alt="베스트게시글이미지"
+              />
+            </div>
+          ) : (
+            ""
+          )}
+        </div>
       </div>
       <div className={styles.article_bottom}>
         <div className={styles.article_bottom_profile}>
