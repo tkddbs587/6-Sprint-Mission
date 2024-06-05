@@ -12,7 +12,7 @@ const ArticlesHeader = ({ setSearch, setOrder }) => {
     <div className={styles.ArticlesHeader}>
       <div className={styles.section_top}>
         <div className={styles.text_article}>게시글</div>
-        <Link href="" className={styles.button}>
+        <Link href="/addboard" className={styles.button}>
           글쓰기
         </Link>
       </div>
@@ -27,7 +27,6 @@ const ArticlesHeader = ({ setSearch, setOrder }) => {
         <input
           onChange={handleInputChange}
           placeholder="검색할 상품을 입력해주세요"
-          // onChange={handleInputChange}
         />
 
         <Dropdown setOrder={setOrder} />

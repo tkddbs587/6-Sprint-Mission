@@ -1,8 +1,12 @@
 import styles from "./Nav.module.css";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 const Nav = () => {
+  const router = useRouter();
+  const pathname = router.pathname;
+
   return (
     <div className={styles.Nav}>
       <Image
@@ -20,7 +24,12 @@ const Nav = () => {
         height={40}
       />
       <div className={styles.links}>
-        <Link href="/boards">자유게시판</Link>
+        <Link
+          href="/boards"
+          className={pathname === "/boards" ? styles.active : ""}
+        >
+          자유게시판
+        </Link>
         <Link href="/items">중고마켓</Link>
       </div>
 

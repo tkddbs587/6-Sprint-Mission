@@ -27,6 +27,10 @@
   font-weight: 700;
 }
 
+.links .active {
+  color: var(--color-blue);
+}
+
 .mobile_logo {
   display: none;
 }
