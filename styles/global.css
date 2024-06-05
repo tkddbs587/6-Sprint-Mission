@@ -1,0 +1,18 @@
+:root {
+  --color-white: #ffffff;
+  --color-gray50: #f9fafb;
+  --color-gray100: #f3f4f6;
+  --color-gray200: #e5e7eb;
+
+  --color-gray400: #9ca3af;
+  --color-gray500: #6b7280;
+  --color-gray600: #4b5563;
+  --color-gray800: #1f2937;
+  --color-gray900: #111827;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}

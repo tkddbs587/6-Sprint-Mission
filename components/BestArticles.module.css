@@ -1,0 +1,15 @@
+.BestArticles {
+  max-width: 1200px;
+  margin-top: 99px;
+}
+
+.text_best {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-gray900);
+}
+
+.articles {
+  display: flex;
+  gap: 24px;
+}
