@@ -1,22 +1,15 @@
 import Image from "next/image";
+import styles from "./ArticleCard.module.css";
 
-import styles from "./BestArticleCard.module.css";
-
-const BestArticleCard = ({ item }) => {
+const ArticleCard = ({ item }) => {
   const { title, likeCount, createdAt, image } = item;
   const { nickname } = item.writer;
   const date = new Date(createdAt);
   const formattedDate = date.toISOString().split("T")[0];
 
   return (
-    <div className={styles.BestArticleCard}>
-      <Image
-        src="/images/img_best_badge.svg"
-        width={102}
-        height={30}
-        alt="베스트게시글뱃지"
-      />
-      <div className={styles.article_top}>
+    <div className={styles.ArticleCard}>
+      <div className={styles.section_top}>
         <div className={styles.title}>{title}</div>
         {image ? (
           <div className={styles.image}>
@@ -31,23 +24,24 @@ const BestArticleCard = ({ item }) => {
           ""
         )}
       </div>
-      <div className={styles.article_bottom}>
-        <div className={styles.article_bottom_profile}>
+      <div className={styles.section_bottom}>
+        <div className={styles.section_left}>
+          <Image src="../images/logo.svg" alt="" width={24} height={24} />
           <div className={styles.profile_name}>{nickname}</div>
-          <div>
-            <Image
-              src="/images/ic_heart.svg"
-              width={16}
-              height={16}
-              alt="좋아요개수아이콘"
-            />
-          </div>
+          <div className={styles.date}>{formattedDate}</div>
+        </div>
+        <div className={styles.section_right}>
+          <Image
+            src="/images/ic_heart.svg"
+            width={24}
+            height={24}
+            alt="좋아요개수아이콘"
+          />
           <div className={styles.like_count}>{likeCount}</div>
         </div>
-        <div className={styles.date}>{formattedDate}</div>
       </div>
     </div>
   );
 };
 
-export default BestArticleCard;
+export default ArticleCard;
