@@ -36,15 +36,17 @@ const BestArticleCard = ({ item }) => {
       <div className={styles.article_bottom}>
         <div className={styles.article_bottom_profile}>
           <div className={styles.profile_name}>{nickname}</div>
-          <div>
-            <Image
-              src="/images/ic_heart.svg"
-              width={16}
-              height={16}
-              alt="좋아요개수아이콘"
-            />
+          <div className={styles.like}>
+            <div>
+              <Image
+                src="/images/ic_heart.svg"
+                width={16}
+                height={16}
+                alt="좋아요개수아이콘"
+              />
+            </div>
+            <div className={styles.like_count}>{likeCount}</div>
           </div>
-          <div className={styles.like_count}>{likeCount}</div>
         </div>
         <div className={styles.date}>{formattedDate}</div>
       </div>

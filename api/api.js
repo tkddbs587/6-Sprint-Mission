@@ -1,9 +1,10 @@
 const BASE_URL = "https://panda-market-api.vercel.app/articles";
+export const RECENT = "recent";
 
 export default async function getArticlesData({
   page = 1,
   pageSize = 10,
-  orderBy = "recent",
+  orderBy = RECENT,
   keyword = "",
 }) {
   const query = `page=${page}&pageSize=${pageSize}&orderBy=${orderBy}&keyword=${keyword}`;

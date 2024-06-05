@@ -3,7 +3,7 @@ import styles from "./ArticlesHeader.module.css";
 import Link from "next/link";
 import Dropdown from "./Dropdown";
 
-const ArticlesHeader = ({ setSearch }) => {
+const ArticlesHeader = ({ setSearch, setOrder }) => {
   const handleInputChange = (e) => {
     setSearch(e.target.value);
   };
@@ -30,7 +30,7 @@ const ArticlesHeader = ({ setSearch }) => {
           // onChange={handleInputChange}
         />
 
-        <Dropdown />
+        <Dropdown setOrder={setOrder} />
       </div>
     </div>
   );

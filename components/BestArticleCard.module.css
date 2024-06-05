@@ -46,10 +46,16 @@
 
 .article_bottom_profile {
   display: flex;
+  gap: 8px;
 }
 
 .profile_name {
   color: var(--color-gray600);
+}
+
+.like {
+  display: flex;
+  gap: 2px;
 }
 
 .like_count {

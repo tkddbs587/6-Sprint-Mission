@@ -7,24 +7,25 @@ import styles from "./Articles.module.css";
 const Articles = () => {
   const [articles, setArticles] = useState([]);
   const [search, setSearch] = useState("");
+  const [order, setOrder] = useState("recent");
 
   useEffect(() => {
     async function loadData() {
       const data = await getArticlesData({
         page: 1,
         pageSize: 10,
-        orderBy: "recent",
+        orderBy: order,
         keyword: search,
       });
       setArticles(data.list);
       console.log(data.list);
     }
     loadData();
-  }, [search]);
+  }, [search, order]);
 
   return (
     <div>
-      <ArticlesHeader setSearch={setSearch} />
+      <ArticlesHeader setSearch={setSearch} setOrder={setOrder} />
       <div className={styles.articles}>
         {articles.map((item) => (
           <ArticleCard item={item} key={item.id} />
