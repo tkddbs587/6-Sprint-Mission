@@ -6,6 +6,7 @@ import styles from "./Articles.module.css";
 
 const Articles = () => {
   const [articles, setArticles] = useState([]);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     async function loadData() {
@@ -13,16 +14,17 @@ const Articles = () => {
         page: 1,
         pageSize: 10,
         orderBy: "recent",
+        keyword: search,
       });
       setArticles(data.list);
       console.log(data.list);
     }
     loadData();
-  }, []);
+  }, [search]);
 
   return (
     <div>
-      <ArticlesHeader />
+      <ArticlesHeader setSearch={setSearch} />
       <div className={styles.articles}>
         {articles.map((item) => (
           <ArticleCard item={item} key={item.id} />

@@ -3,7 +3,11 @@ import styles from "./ArticlesHeader.module.css";
 import Link from "next/link";
 import Dropdown from "./Dropdown";
 
-const ArticlesHeader = () => {
+const ArticlesHeader = ({ setSearch }) => {
+  const handleInputChange = (e) => {
+    setSearch(e.target.value);
+  };
+
   return (
     <div className={styles.ArticlesHeader}>
       <div className={styles.section_top}>
@@ -21,6 +25,7 @@ const ArticlesHeader = () => {
       />
       <div className={styles.section_bottom}>
         <input
+          onChange={handleInputChange}
           placeholder="검색할 상품을 입력해주세요"
           // onChange={handleInputChange}
         />
