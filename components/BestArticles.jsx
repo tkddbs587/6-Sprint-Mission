@@ -2,9 +2,12 @@ import { useEffect, useState } from "react";
 import getArticlesData from "../api/api";
 import BestArticleCard from "./BestArticleCard";
 import styles from "./BestArticles.module.css";
+import useScreenWidth from "../hooks/useScreenWidth";
 
 const BestArticles = () => {
   const [articles, setArticles] = useState([]);
+  const screenWidth = useScreenWidth();
+  console.log(screenWidth);
 
   useEffect(() => {
     async function loadData() {
@@ -13,9 +16,8 @@ const BestArticles = () => {
         orderBy: "like",
       });
       setArticles(data.list);
-      console.log(data.list);
-      console.log(articles);
     }
+
     loadData();
   }, []);
 

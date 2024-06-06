@@ -12,13 +12,10 @@ const Articles = () => {
   useEffect(() => {
     async function loadData() {
       const data = await getArticlesData({
-        page: 1,
-        pageSize: 10,
         orderBy: order,
         keyword: search,
       });
       setArticles(data.list);
-      console.log(data.list);
     }
     loadData();
   }, [search, order]);
