@@ -6,20 +6,26 @@ import useScreenWidth from "../hooks/useScreenWidth";
 
 const BestArticles = () => {
   const [articles, setArticles] = useState([]);
-  const screenWidth = useScreenWidth();
-  console.log(screenWidth);
+  const { isTabletSize, isMobileSize } = useScreenWidth();
 
   useEffect(() => {
     async function loadData() {
+      let pageSize = 3;
+      if (isTabletSize) {
+        pageSize = 2;
+      }
+      if (isMobileSize) {
+        pageSize = 1;
+      }
       const data = await getArticlesData({
-        pageSize: 3,
+        pageSize: pageSize,
         orderBy: "like",
       });
       setArticles(data.list);
     }
 
     loadData();
-  }, []);
+  }, [isTabletSize, isMobileSize]);
 
   return (
     <div className={styles.BestArticles}>
