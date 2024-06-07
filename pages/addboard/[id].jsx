@@ -9,10 +9,6 @@ const Addboard = () => {
   const router = useRouter();
   const { id } = router.query;
   const [article, setArticle] = useState();
-  const [value, setValue] = useState("");
-  console.log(article);
-
-  const isButtonDisabled = value === "" ? true : false;
 
   // router.query로 현재 페이지 id값 추출해서 쿼리로 보내서 데이터 fetching해오기
   useEffect(() => {
@@ -31,12 +27,7 @@ const Addboard = () => {
     <>
       <div className={styles.Addboard}>
         <ArticleFeed article={article} />
-        <ArticleFeedComments
-          id={id}
-          value={value}
-          setValue={setValue}
-          isButtonDisabled={isButtonDisabled}
-        />
+        <ArticleFeedComments id={id} />
       </div>
     </>
   );

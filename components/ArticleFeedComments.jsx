@@ -3,12 +3,14 @@ import styles from "./ArticleFeedComments.module.css";
 import getArticleComments from "../api/api";
 import ArticleComments from "./ArticleComments";
 
-const ArticleFeedComments = ({ id, setValue, isButtonDisabled, value }) => {
+const ArticleFeedComments = ({ id }) => {
+  const [value, setValue] = useState("");
   const [comments, setComments] = useState([]);
 
   const handleInputChange = (e) => {
     setValue(e.target.value);
   };
+  const isButtonDisabled = value.trim() === "" ? true : false;
 
   useEffect(() => {
     async function loadArticleComments() {

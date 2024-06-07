@@ -16,7 +16,7 @@ const UploadArticle = () => {
 
   const { title, content } = values;
 
-  const isButtonDisabled = (title && content) === "" ? true : false;
+  const isButtonDisabled = (title && content).trim() === "" ? true : false;
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
