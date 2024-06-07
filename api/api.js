@@ -14,6 +14,13 @@ export default async function getArticlesData({
   return data;
 }
 
+export async function getArticle(id) {
+  const res = await fetch(`${BASE_URL}/articles/${id}`);
+  const data = await res.json();
+
+  return data;
+}
+
 export async function postArticle(values) {
   const accessToken = await getAccessToken();
   const res = await fetch(`${BASE_URL}/articles`, {
