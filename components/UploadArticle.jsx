@@ -2,17 +2,21 @@ import { useState } from "react";
 import UploadArticleHeader from "./UploadArticleHeader";
 import FileInput from "./FileInput";
 import styles from "./UploadArticle.module.css";
+import { postArticle } from "../api/api";
+import { redirect } from "next/navigation";
+import { useRouter } from "next/router";
 
 const UploadArticle = () => {
+  const router = useRouter();
   const [values, setValues] = useState({
     title: "",
     content: "",
-    image: "",
+    image: undefined,
   });
 
   const { title, content } = values;
 
-  const handleButtonSubmit = (title && content) === "" ? true : false;
+  const isButtonDisabled = (title && content) === "" ? true : false;
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -26,11 +30,17 @@ const UploadArticle = () => {
     }));
   };
 
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    postArticle(values)
+      .then((res) => res.json())
+      .then((data) => data.id && router.push(`/addboard/${data.id}`));
+  };
+
   return (
     <div className={styles.UploadArticle}>
-      <UploadArticleHeader handleButtonSubmit={handleButtonSubmit} />
-
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={handleFormSubmit}>
+        <UploadArticleHeader isButtonDisabled={isButtonDisabled} />
         <div>
           <label className={styles.label}>
             *제목

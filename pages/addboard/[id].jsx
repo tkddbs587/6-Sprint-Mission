@@ -1,4 +1,3 @@
-import Button from "../../components/Button";
 import styles from "./[id].module.css";
 
 const Addboard = () => {
@@ -16,7 +15,13 @@ const Addboard = () => {
           />
 
           <div className={styles.button}>
-            <Button />
+            {/* <button
+              className={`${styles.button} ${
+                isButtonDisabled ? "" : styles.activation
+              }`}
+            >
+              등록
+            </button> */}
           </div>
         </div>
       </div>

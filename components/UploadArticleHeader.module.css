@@ -10,3 +10,19 @@
   font-weight: 700;
   color: var(--color-gray900);
 }
+
+.button {
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+  padding: 12px 23px;
+  color: var(--color-white);
+  background-color: var(--color-gray400);
+  border: none;
+  border-radius: 8px;
+  text-decoration: none;
+}
+
+.activation {
+  background-color: var(--color-blue);
+}
