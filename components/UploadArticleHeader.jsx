@@ -1,13 +1,11 @@
-import Link from "next/link";
+import Button from "./Button";
 import styles from "./UploadArticleHeader.module.css";
 
-const UploadArticleHeader = () => {
+const UploadArticleHeader = ({ handleButtonSubmit }) => {
   return (
     <div className={styles.UploadArticleHeader}>
       <div className={styles.header_text}>게시글 쓰기</div>
-      <Link href="" className={styles.button}>
-        등록
-      </Link>
+      <Button handleButtonSubmit={handleButtonSubmit} />
     </div>
   );
 };

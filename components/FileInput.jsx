@@ -1,6 +1,22 @@
+import { useState } from "react";
 import styles from "./FileInput.module.css";
 
-const FileInput = () => {
+const FileInput = ({ setValues }) => {
+  const [inputValue, setInputValue] = useState("");
+
+  const handleFileChange = (e) => {
+    setInputValue(e.target.value);
+    const file = e.target.files[0];
+    const fileUrl = URL.createObjectURL(file);
+    setValues((prev) => {
+      return {
+        ...prev,
+        image: fileUrl,
+      };
+    });
+    console.log(e.target.files[0]);
+  };
+
   return (
     <div>
       <p className={styles.label_text}>이미지</p>
@@ -11,10 +27,11 @@ const FileInput = () => {
         </label>
         <input
           id={styles.FileInput}
+          name="image"
           type="file"
-          // value={inputValue}
+          value={inputValue}
           placeholder="이미지 등록"
-          // onChange={handleFileChange}
+          onChange={handleFileChange}
         />
       </div>
     </div>
