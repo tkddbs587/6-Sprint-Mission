@@ -21,6 +21,15 @@ export async function getArticle(id) {
   return data;
 }
 
+export async function getArticleComments({ articleId, limit }) {
+  const res = await fetch(
+    `${BASE_URL}/articles/${articleId}/comments?limit=${limit}`
+  );
+  const data = await res.json();
+
+  return data;
+}
+
 export async function postArticle(values) {
   const accessToken = await getAccessToken();
   const res = await fetch(`${BASE_URL}/articles`, {
@@ -40,7 +49,7 @@ export async function getAccessToken() {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ email: "example@email.com", password: "password" }),
+    body: JSON.stringify({ email: "hoon@email.com", password: "password" }),
   });
   const data = await res.json();
   const accessToken = data.accessToken;
