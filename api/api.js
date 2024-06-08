@@ -46,16 +46,16 @@ export async function postArticle(values) {
 
 export async function postArticleComment({ articleId, content }) {
   const accessToken = await getAccessToken();
-  console.log(accessToken);
+
   const res = await fetch(`${BASE_URL}/articles/${articleId}/comments`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${accessToken}`,
     },
-    body: JSON.stringify(content),
+    body: JSON.stringify({ content: content }),
   });
-  return res.data;
+  return res;
 }
 
 export async function getAccessToken() {

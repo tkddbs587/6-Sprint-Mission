@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import styles from "./ArticleFeedComments.module.css";
-import getArticleComments from "../api/api";
-import postArticleComment from "../api/api";
+import { getArticleComments } from "../api/api";
+import { postArticleComment } from "../api/api";
 import ArticleComments from "./ArticleComments";
 
 const ArticleFeedComments = ({ id }) => {
   const [content, setContent] = useState("");
   const [comments, setComments] = useState([]);
+  const [isChangeComments, setIsChangeComments] = useState(false);
 
   const handleInputChange = (e) => {
     setContent(e.target.value);
@@ -14,23 +15,23 @@ const ArticleFeedComments = ({ id }) => {
   const isButtonDisabled = content.trim() === "" ? true : false;
 
   useEffect(() => {
-    async function loadArticleComments(id) {
-      const data = await getArticleComments({ id: id, limit: 5 });
+    async function loadArticleComments(articleId) {
+      const data = await getArticleComments({ articleId: articleId, limit: 5 });
       setComments(data.list);
     }
     loadArticleComments(id);
-  }, []);
+  }, [isChangeComments]);
 
   const onSubmit = async (e) => {
-    e.preventDefault();
-    const data = await postArticleComment({ id: id, content: content });
-    console.log(data);
-    // const newComment = await data.json();
-    // console.log(newComment);
-
-    // setComments(data.list);
-
-    setContent("");
+    if (id) {
+      e.preventDefault();
+      const data = await postArticleComment({
+        articleId: id,
+        content: content,
+      });
+      setIsChangeComments(!isChangeComments);
+      setContent("");
+    }
   };
 
   return (
@@ -47,6 +48,7 @@ const ArticleFeedComments = ({ id }) => {
           />
           <div className={styles.button_box}>
             <button
+              type="submit"
               className={`${styles.button} ${
                 isButtonDisabled ? "" : styles.activation
               }`}
@@ -57,10 +59,11 @@ const ArticleFeedComments = ({ id }) => {
         </div>
       </form>
       <div className={styles.comments}>
-        {comments &&
-          comments.map((comment) => (
-            <ArticleComments comment={comment} key={comment.id} />
-          ))}
+        {comments.length
+          ? comments.map((comment) => (
+              <ArticleComments comment={comment} key={comment.id} />
+            ))
+          : ""}
       </div>
     </div>
   );
