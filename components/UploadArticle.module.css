@@ -45,4 +45,5 @@
   background-color: var(--color-gray100);
   border: none;
   border-radius: 12px;
+  resize: none;
 }

@@ -32,6 +32,7 @@ export async function getArticleComments({ articleId, limit }) {
 
 export async function postArticle(values) {
   const accessToken = await getAccessToken();
+
   const res = await fetch(`${BASE_URL}/articles`, {
     method: "POST",
     headers: {
@@ -43,13 +44,27 @@ export async function postArticle(values) {
   return res;
 }
 
+export async function postArticleComment({ articleId, content }) {
+  const accessToken = await getAccessToken();
+  console.log(accessToken);
+  const res = await fetch(`${BASE_URL}/articles/${articleId}/comments`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+    body: JSON.stringify(content),
+  });
+  return res.data;
+}
+
 export async function getAccessToken() {
   const res = await fetch(`${BASE_URL}/auth/signIn`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ email: "hoon@email.com", password: "password" }),
+    body: JSON.stringify({ email: "example@email.com", password: "password" }),
   });
   const data = await res.json();
   const accessToken = data.accessToken;

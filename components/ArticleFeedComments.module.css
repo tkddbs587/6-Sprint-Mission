@@ -21,6 +21,7 @@
   background-color: var(--color-gray100);
   border: none;
   border-radius: 12px;
+  resize: none;
 }
 
 .button_box {
@@ -39,6 +40,7 @@
   border: none;
   border-radius: 8px;
   text-decoration: none;
+  cursor: pointer;
 }
 
 .activation {

@@ -18,7 +18,6 @@ const FileInput = ({ setValues }) => {
         image: fileUrl,
       };
     });
-    console.log(e.target.files[0]);
   };
 
   const handlePreviewDelete = () => {

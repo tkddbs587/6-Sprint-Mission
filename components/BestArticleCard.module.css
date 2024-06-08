@@ -3,10 +3,11 @@
   flex-direction: column;
   justify-content: space-between;
   background-color: var(--color-gray50);
-  width: 100%;
+  width: 384px;
   height: 169px;
   padding: 0 24px 16px;
   border-radius: 8px;
+  text-decoration: none;
 }
 
 .title {
