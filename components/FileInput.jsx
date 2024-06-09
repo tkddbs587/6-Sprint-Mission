@@ -1,21 +1,28 @@
 import { useState } from "react";
 import styles from "./FileInput.module.css";
 import Image from "next/image";
+import { postFile } from "../api/api";
 
 const FileInput = ({ setValues }) => {
   const [inputValue, setInputValue] = useState("");
   const [preview, setPreview] = useState();
   const [file, setFile] = useState();
 
-  const handleFileChange = (e) => {
+  const handleFileChange = async (e) => {
     setInputValue(e.target.value);
-    const file = e.target.files[0];
-    const fileUrl = URL.createObjectURL(file);
-    setPreview(fileUrl);
+    const selectedFile = e.target.files[0];
+    const previewUrl = URL.createObjectURL(selectedFile);
+    setPreview(previewUrl);
+
+    const formData = new FormData();
+    formData.append("image", selectedFile);
+    const fileUrlResponse = await postFile(formData);
+    const fileUrlData = await fileUrlResponse.json();
+
     setValues((prev) => {
       return {
         ...prev,
-        image: fileUrl,
+        image: fileUrlData.url,
       };
     });
   };

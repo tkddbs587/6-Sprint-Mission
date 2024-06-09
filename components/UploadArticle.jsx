@@ -3,6 +3,7 @@ import UploadArticleHeader from "./UploadArticleHeader";
 import FileInput from "./FileInput";
 import styles from "./UploadArticle.module.css";
 import { postArticle } from "../api/api";
+
 import { useRouter } from "next/router";
 
 const UploadArticle = () => {
@@ -12,6 +13,8 @@ const UploadArticle = () => {
     content: "",
     image: undefined,
   });
+
+  // console.log(values);
 
   const { title, content } = values;
 
@@ -35,8 +38,6 @@ const UploadArticle = () => {
       .then((res) => res.json())
       .then((data) => data.id && router.push(`/addboard/${data.id}`));
   };
-
-  console.log(values);
 
   return (
     <div className={styles.UploadArticle}>

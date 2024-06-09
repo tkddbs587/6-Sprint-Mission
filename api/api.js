@@ -44,16 +44,30 @@ export async function postArticle(values) {
   return res;
 }
 
-export async function postArticleComment({ articleId, content }) {
+export async function postFile(file) {
   const accessToken = await getAccessToken();
 
+  const res = await fetch(`${BASE_URL}/images/upload`, {
+    method: "POST",
+    headers: {
+      // "Content-Type": "multipart/form-data",
+      // 헤더에 "multipart/form-data"를 담아서 post 요청하니까 오류가남..
+      Authorization: `Bearer ${accessToken}`,
+    },
+    body: file,
+  });
+  return res;
+}
+
+export async function postArticleComment({ articleId, content }) {
+  const accessToken = await getAccessToken();
   const res = await fetch(`${BASE_URL}/articles/${articleId}/comments`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${accessToken}`,
     },
-    body: JSON.stringify({ content: content }),
+    body: JSON.stringify({ content }),
   });
   return res;
 }
@@ -64,7 +78,10 @@ export async function getAccessToken() {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ email: "example@email.com", password: "password" }),
+    body: JSON.stringify({
+      email: "hatesummer@email.com",
+      password: "password",
+    }),
   });
   const data = await res.json();
   const accessToken = data.accessToken;

@@ -23,15 +23,13 @@ const ArticleFeedComments = ({ id }) => {
   }, [isChangeComments]);
 
   const onSubmit = async (e) => {
-    if (id) {
-      e.preventDefault();
-      const data = await postArticleComment({
-        articleId: id,
-        content: content,
-      });
-      setIsChangeComments(!isChangeComments);
-      setContent("");
-    }
+    e.preventDefault();
+    const data = await postArticleComment({
+      articleId: id,
+      content: content,
+    });
+    setIsChangeComments(!isChangeComments);
+    setContent("");
   };
 
   return (
