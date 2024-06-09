@@ -2,9 +2,16 @@ import Image from "next/image";
 import styles from "./ArticlesHeader.module.css";
 import Link from "next/link";
 import Dropdown from "./Dropdown";
+import { ChangeEvent, Dispatch, SetStateAction } from "react";
 
-const ArticlesHeader = ({ setSearch, setOrder }) => {
-  const handleInputChange = (e) => {
+const ArticlesHeader = ({
+  setSearch,
+  setOrder,
+}: {
+  setSearch: Dispatch<SetStateAction<string>>;
+  setOrder: Dispatch<SetStateAction<string>>;
+}) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
   };
 

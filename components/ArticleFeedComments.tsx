@@ -1,28 +1,29 @@
-import { useEffect, useState } from "react";
+import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
 import styles from "./ArticleFeedComments.module.css";
 import { getArticleComments } from "../api/api";
 import { postArticleComment } from "../api/api";
 import ArticleComments from "./ArticleComments";
+import { Comment } from "@/types";
 
-const ArticleFeedComments = ({ id }) => {
-  const [content, setContent] = useState("");
-  const [comments, setComments] = useState([]);
-  const [isChangeComments, setIsChangeComments] = useState(false);
+const ArticleFeedComments = ({ id }: { id: string }) => {
+  const [content, setContent] = useState<string>("");
+  const [comments, setComments] = useState<Comment[]>([]);
+  const [isChangeComments, setIsChangeComments] = useState<boolean>(false);
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
   };
   const isButtonDisabled = content.trim() === "" ? true : false;
 
   useEffect(() => {
-    async function loadArticleComments(articleId) {
+    async function loadArticleComments(articleId: string) {
       const data = await getArticleComments({ articleId: articleId, limit: 5 });
       setComments(data.list);
     }
     loadArticleComments(id);
   }, [isChangeComments]);
 
-  const onSubmit = async (e) => {
+  const onSubmit = async (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     const data = await postArticleComment({
       articleId: id,

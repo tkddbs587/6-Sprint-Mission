@@ -1,6 +1,10 @@
 import styles from "./UploadArticleHeader.module.css";
 
-const UploadArticleHeader = ({ isButtonDisabled }) => {
+const UploadArticleHeader = ({
+  isButtonDisabled,
+}: {
+  isButtonDisabled: boolean;
+}) => {
   return (
     <div className={styles.UploadArticleHeader}>
       <div className={styles.header_text}>게시글 쓰기</div>

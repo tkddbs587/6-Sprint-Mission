@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ChangeEvent, SyntheticEvent, useState } from "react";
 import UploadArticleHeader from "./UploadArticleHeader";
 import FileInput from "./FileInput";
 import styles from "./UploadArticle.module.css";
@@ -14,25 +14,25 @@ const UploadArticle = () => {
     image: undefined,
   });
 
-  // console.log(values);
-
   const { title, content } = values;
 
   const isButtonDisabled = (title && content).trim() === "" ? true : false;
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (
+    e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) => {
     const { name, value } = e.target;
     onChangeInput(name, value);
   };
 
-  const onChangeInput = (name, value) => {
+  const onChangeInput = (name: string, value: string) => {
     setValues((prevValues) => ({
       ...prevValues,
       [name]: value,
     }));
   };
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     postArticle(values)
       .then((res) => res.json())
@@ -48,7 +48,7 @@ const UploadArticle = () => {
             *제목
             <input
               name="title"
-              value={values.input}
+              value={values.title}
               onChange={handleInputChange}
               className={styles.input}
               placeholder="제목을 입력해주세요"
@@ -60,7 +60,7 @@ const UploadArticle = () => {
             *내용
             <textarea
               name="content"
-              value={values.textarea}
+              value={values.content}
               onChange={handleInputChange}
               className={styles.textarea}
               placeholder="내용을 입력해주세요"

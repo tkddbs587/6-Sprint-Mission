@@ -1,7 +1,12 @@
+import { ChangeEvent, Dispatch, SetStateAction } from "react";
 import styles from "./Dropdown.module.css";
 
-const Dropdown = ({ setOrder }) => {
-  const handleOrderChange = (e) => {
+const Dropdown = ({
+  setOrder,
+}: {
+  setOrder: Dispatch<SetStateAction<string>>;
+}) => {
+  const handleOrderChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setOrder(e.target.value);
   };
 

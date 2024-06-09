@@ -3,9 +3,10 @@ import getArticlesData from "../api/api";
 import BestArticleCard from "./BestArticleCard";
 import styles from "./BestArticles.module.css";
 import useScreenWidth from "../hooks/useScreenWidth";
+import { Article } from "@/types";
 
 const BestArticles = () => {
-  const [articles, setArticles] = useState([]);
+  const [articles, setArticles] = useState<Article[]>([]);
   const { isTabletSize, isMobileSize } = useScreenWidth();
 
   useEffect(() => {
@@ -31,8 +32,8 @@ const BestArticles = () => {
     <div className={styles.BestArticles}>
       <div className={styles.text_best}>베스트 게시글</div>
       <div className={styles.articles}>
-        {articles.map((item) => (
-          <BestArticleCard item={item} key={item.id} />
+        {articles.map((article) => (
+          <BestArticleCard article={article} key={article.id} />
         ))}
       </div>
     </div>

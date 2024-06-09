@@ -1,10 +1,17 @@
 import Image from "next/image";
 import styles from "./ArticleCard.module.css";
 import Link from "next/link";
+import { Article } from "@/types";
 
-const ArticleCard = ({ item }) => {
-  const { id, title, likeCount, createdAt, image } = item;
-  const { nickname } = item.writer;
+const ArticleCard = ({ item }: { item: Article }) => {
+  const {
+    id,
+    title,
+    likeCount,
+    createdAt,
+    image,
+    writer: { nickname },
+  } = item;
   const date = new Date(createdAt);
   const formattedDate = date.toISOString().split("T")[0];
 

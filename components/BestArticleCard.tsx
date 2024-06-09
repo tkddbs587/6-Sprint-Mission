@@ -1,11 +1,11 @@
 import Image from "next/image";
-
 import styles from "./BestArticleCard.module.css";
 import Link from "next/link";
+import { Article } from "@/types";
 
-const BestArticleCard = ({ item }) => {
-  const { id, title, likeCount, createdAt, image } = item;
-  const { nickname } = item.writer;
+const BestArticleCard = ({ article }: { article: Article }) => {
+  const { id, title, likeCount, createdAt, image } = article;
+  const { nickname } = article.writer;
   const date = new Date(createdAt);
   const formattedDate = date.toISOString().split("T")[0];
 

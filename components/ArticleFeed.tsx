@@ -1,7 +1,8 @@
 import Image from "next/image";
 import styles from "./ArticleFeed.module.css";
+import { Article } from "@/types";
 
-const ArticleFeed = ({ article }) => {
+const ArticleFeed = ({ article }: { article: Article }) => {
   const { title, createdAt, likeCount, content } = article;
   const { nickname } = article.writer;
   const date = new Date(createdAt);

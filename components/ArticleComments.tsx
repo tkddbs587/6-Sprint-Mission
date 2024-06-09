@@ -1,7 +1,8 @@
+import { Comment } from "@/types";
 import styles from "./ArticleComments.module.css";
 import Image from "next/image";
 
-const ArticleComments = ({ comment }) => {
+const ArticleComments = ({ comment }: { comment: Comment }) => {
   const { content, createdAt } = comment;
   const { nickname } = comment.writer;
   const date = new Date(createdAt);

@@ -1,5 +1,5 @@
 import React from "react";
-import UploadArticle from "../components/UploadArticle";
+import UploadArticle from "../../components/UploadArticle";
 
 const addboard = () => {
   return (

@@ -3,11 +3,12 @@ import ArticleCard from "./ArticleCard";
 import ArticlesHeader from "./ArticlesHeader";
 import getArticlesData from "../api/api";
 import styles from "./Articles.module.css";
+import { Article } from "@/types";
 
 const Articles = () => {
-  const [articles, setArticles] = useState([]);
-  const [search, setSearch] = useState("");
-  const [order, setOrder] = useState("recent");
+  const [articles, setArticles] = useState<Article[]>([]);
+  const [search, setSearch] = useState<string>("");
+  const [order, setOrder] = useState<string>("recent");
 
   useEffect(() => {
     async function loadData() {
