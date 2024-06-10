@@ -1,0 +1,58 @@
+.ArticleCard {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--color-gray200);
+}
+
+.section_top {
+  display: flex;
+  justify-content: space-between;
+}
+
+.title {
+  color: var(--color-gray800);
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.image {
+  background-color: var(--color-white);
+  width: 72px;
+  height: 72px;
+  padding: 14px 12px;
+  border: 1px solid var(--color-gray200);
+  border-radius: 6px;
+}
+
+.section_bottom {
+  display: flex;
+  justify-content: space-between;
+}
+
+.section_left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.profile_name {
+  color: var(--color-gray600);
+}
+
+.date {
+  color: var(--color-gray400);
+}
+
+.section_right {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.like_count {
+  font-size: 16px;
+  color: var(--color-gray500);
+}

@@ -1,0 +1,16 @@
+.select {
+  width: 130px;
+  height: 46px;
+  padding: 12px 20px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  font-size: 16px;
+  font-weight: 400;
+  color: #1f2937;
+}
+
+@media (min-width: 768px) and (max-width: 1200px) {
+  .select {
+    width: 120px;
+  }
+}

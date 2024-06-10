@@ -1,0 +1,69 @@
+.Nav {
+  max-width: 1920px;
+  width: 100%;
+  background-color: #ffffff;
+  position: fixed;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 8vw;
+  border-bottom: 1px solid #dfdfdf;
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  margin-left: 32px;
+}
+
+.links a {
+  padding: 16px;
+  text-decoration: none;
+  color: #4b5563;
+  background-color: #ffffff;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.links .active {
+  color: var(--color-blue);
+}
+
+.mobile_logo {
+  display: none;
+}
+
+.logo {
+  margin-left: auto;
+}
+
+@media (min-width: 768px) and (max-width: 1200px) {
+  .Nav {
+    padding: 10px 24px;
+  }
+}
+
+@media all and (max-width: 767px) {
+  .Nav {
+    padding: 10px 16px;
+  }
+
+  .panda_logo {
+    display: none;
+  }
+
+  .mobile_logo {
+    display: block;
+  }
+
+  .links {
+    margin-left: 0;
+  }
+
+  .links a {
+    font-size: 16px;
+    padding: 0 0 0 16px;
+  }
+}

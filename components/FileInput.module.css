@@ -1,0 +1,57 @@
+.file_input {
+  display: none;
+}
+
+.label_text {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 12px;
+}
+
+.file_input_container {
+  display: flex;
+  gap: 24px;
+  height: 290px;
+}
+
+.preview {
+  position: relative;
+}
+
+.preview_img {
+  border-radius: 12px;
+}
+
+.x_icon {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.file_input_label {
+  width: 282px;
+  height: 282px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #9ca3af;
+  background-color: #f3f4f6;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.file_input_text {
+  font-size: 16px;
+  font-weight: 400;
+  background: transparent;
+}
+
+.file_input_plus_text {
+  font-size: 56px;
+  font-weight: 200;
+  background: transparent;
+}

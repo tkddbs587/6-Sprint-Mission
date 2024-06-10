@@ -1,0 +1,68 @@
+.BestArticleCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: var(--color-gray50);
+  width: 384px;
+  height: 169px;
+  padding: 0 24px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+}
+
+.title {
+  color: var(--color-gray800);
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.section_top {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.image {
+  background-color: var(--color-white);
+  width: 72px;
+  height: 72px;
+  padding: 14px 12px;
+  border: 1px solid var(--color-gray200);
+  border-radius: 6px;
+}
+
+.article_top {
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+  /* margin: 16px 0 18px; */
+}
+
+.article_bottom {
+  font-size: 14px;
+  font-weight: 400;
+  display: flex;
+  justify-content: space-between;
+}
+
+.article_bottom_profile {
+  display: flex;
+  gap: 8px;
+}
+
+.profile_name {
+  color: var(--color-gray600);
+}
+
+.like {
+  display: flex;
+  gap: 2px;
+}
+
+.like_count {
+  color: var(--color-gray500);
+}
+
+.date {
+  color: var(--color-gray400);
+}
