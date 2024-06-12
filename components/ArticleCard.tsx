@@ -2,6 +2,7 @@ import Image from "next/image";
 import styles from "./ArticleCard.module.css";
 import Link from "next/link";
 import { Article } from "@/types";
+import getFormattedDate from "@/utils/formatDate";
 
 const ArticleCard = ({ item }: { item: Article }) => {
   const {
@@ -12,15 +13,16 @@ const ArticleCard = ({ item }: { item: Article }) => {
     image,
     writer: { nickname },
   } = item;
-  const date = new Date(createdAt);
-  const formattedDate = date.toISOString().split("T")[0];
+
+  // const date = new Date(createdAt);
+  // const formattedDate = date.toISOString().split("T")[0];
 
   return (
     <Link href={`/addboard/${id}`}>
       <div className={styles.ArticleCard}>
         <div className={styles.section_top}>
           <div className={styles.title}>{title}</div>
-          {image ? (
+          {image && (
             <div className={styles.image}>
               <Image
                 src={image}
@@ -29,15 +31,13 @@ const ArticleCard = ({ item }: { item: Article }) => {
                 alt="베스트게시글이미지"
               />
             </div>
-          ) : (
-            ""
           )}
         </div>
         <div className={styles.section_bottom}>
           <div className={styles.section_left}>
             <Image src="../images/logo.svg" alt="" width={24} height={24} />
             <div className={styles.profile_name}>{nickname}</div>
-            <div className={styles.date}>{formattedDate}</div>
+            <div className={styles.date}>{getFormattedDate(createdAt)}</div>
           </div>
           <div className={styles.section_right}>
             <Image

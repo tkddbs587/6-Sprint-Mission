@@ -12,13 +12,13 @@ const Addboard = () => {
 
   // router.query로 현재 페이지 id값 추출해서 쿼리로 보내서 데이터 fetching해오기
   useEffect(() => {
-    async function loadArticle(id) {
-      if (id) {
-        const data = await getArticle(id);
-        setArticle(data);
-      }
+    async function loadArticle(id: string) {
+      const data = await getArticle(id);
+      setArticle(data);
     }
-    loadArticle(id);
+    if (typeof id === "string") {
+      loadArticle(id);
+    }
   }, [id]);
 
   if (!article) return null;
@@ -27,7 +27,7 @@ const Addboard = () => {
     <>
       <div className={styles.Addboard}>
         <ArticleFeed article={article} />
-        <ArticleFeedComments id={id} />
+        <ArticleFeedComments id={id as string} />
       </div>
     </>
   );

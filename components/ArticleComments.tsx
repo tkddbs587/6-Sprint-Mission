@@ -1,12 +1,11 @@
 import { Comment } from "@/types";
 import styles from "./ArticleComments.module.css";
 import Image from "next/image";
+import getFormattedDate from "@/utils/formatDate";
 
 const ArticleComments = ({ comment }: { comment: Comment }) => {
   const { content, createdAt } = comment;
   const { nickname } = comment.writer;
-  const date = new Date(createdAt);
-  const formattedDate = date.toISOString().split("T")[0];
 
   return (
     <div className={styles.ArticleComments}>
@@ -23,7 +22,7 @@ const ArticleComments = ({ comment }: { comment: Comment }) => {
         <Image src="/images/logo.svg" width={32} height={32} alt="유저이미지" />
         <div className={styles.section_bottom_right}>
           <div className={styles.nickname}>{nickname}</div>
-          <div className={styles.date}>{formattedDate}</div>
+          <div className={styles.date}>{getFormattedDate(createdAt)}</div>
         </div>
       </div>
     </div>

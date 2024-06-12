@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import getArticlesData from "../api/api";
+import { getArticlesData } from "@/api/api";
 import BestArticleCard from "./BestArticleCard";
 import styles from "./BestArticles.module.css";
 import useScreenWidth from "../hooks/useScreenWidth";

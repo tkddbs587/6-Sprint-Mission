@@ -1,7 +1,7 @@
-const BASE_URL = "https://panda-market-api.vercel.app";
+const BASE_URL = process.env.NEXT_PUBLIC_API;
 export const RECENT = "recent";
 
-export default async function getArticlesData({
+export async function getArticlesData({
   page = 1,
   pageSize = 10,
   orderBy = RECENT,
@@ -22,12 +22,15 @@ export async function getArticle(id) {
 }
 
 export async function getArticleComments({ articleId, limit }) {
-  const res = await fetch(
-    `${BASE_URL}/articles/${articleId}/comments?limit=${limit}`
-  );
-  const data = await res.json();
-
-  return data;
+  try {
+    const res = await fetch(
+      `${BASE_URL}/articles/${articleId}/comments?limit=${limit}`
+    );
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 export async function postArticle(values) {
@@ -50,8 +53,6 @@ export async function postFile(file) {
   const res = await fetch(`${BASE_URL}/images/upload`, {
     method: "POST",
     headers: {
-      // "Content-Type": "multipart/form-data",
-      // 헤더에 "multipart/form-data"를 담아서 post 요청하니까 오류가남..
       Authorization: `Bearer ${accessToken}`,
     },
     body: file,
@@ -79,7 +80,7 @@ export async function getAccessToken() {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      email: "hatesummer@email.com",
+      email: "weworkhi@email.com",
       password: "password",
     }),
   });

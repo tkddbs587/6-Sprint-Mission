@@ -1,7 +1,7 @@
 import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
 import styles from "./ArticleFeedComments.module.css";
-import { getArticleComments } from "../api/api";
-import { postArticleComment } from "../api/api";
+import { getArticleComments } from "@/api/api";
+import { postArticleComment } from "@/api/api";
 import ArticleComments from "./ArticleComments";
 import { Comment } from "@/types";
 
@@ -17,7 +17,10 @@ const ArticleFeedComments = ({ id }: { id: string }) => {
 
   useEffect(() => {
     async function loadArticleComments(articleId: string) {
-      const data = await getArticleComments({ articleId: articleId, limit: 5 });
+      const data = await getArticleComments({
+        articleId: articleId,
+        limit: 5,
+      });
       setComments(data.list);
     }
     loadArticleComments(id);
