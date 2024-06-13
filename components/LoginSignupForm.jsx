@@ -9,8 +9,73 @@ const LoginSignupForm = ({ type }) => {
     email: "",
     nickname: "",
     password: "",
-    password_check: "",
+    passwordCheck: "",
   });
+  const { email, nickname, password, passwordCheck } = formValues;
+  const [errors, setErrors] = useState({
+    emailError: "",
+    nicknameError: "",
+    passwordError: "",
+    passwordCheckError: "",
+  });
+  const { emailError, nicknameError, passwordError, passwordCheckError } =
+    errors;
+
+  function validateEmail(email) {
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
+    if (!email) {
+      return "이메일을 입력해주세요.";
+    } else if (!emailRegex.test(email)) {
+      return "잘못된 이메일 형식입니다.";
+    } else {
+      return "";
+    }
+  }
+
+  function validateNickname(nickname) {
+    if (!nickname) {
+      return "닉네임을 입력해주세요.";
+    } else {
+      return "";
+    }
+  }
+
+  function validatePassword(password) {
+    if (!password) {
+      return "비밀번호를 입력해주세요";
+    } else if (password.length < 8) {
+      return "비밀번호를 8자 이상 입력해주세요.";
+    } else {
+      return "";
+    }
+  }
+
+  function validatePasswordCheck(password, passwordCheck) {
+    if (password !== passwordCheck) {
+      return "비밀번호가 일치하지 않습니다.";
+    }
+  }
+
+  function handleBlurChange(field) {
+    let error = "";
+    switch (field) {
+      case "emailError":
+        error = validateEmail(email);
+        break;
+      case "nicknameError":
+        error = validateNickname(nickname);
+        break;
+      case "passwordError":
+        error = validatePassword(password);
+        break;
+      case "passwordCheckError":
+        error = validatePasswordCheck(password, passwordCheck);
+        break;
+      default:
+        break;
+    }
+    setErrors({ ...errors, [field]: error });
+  }
 
   const onChangeInput = (e) => {
     const { name, value } = e.target;
@@ -36,38 +101,44 @@ const LoginSignupForm = ({ type }) => {
             <label className={styles.label}>이메일</label>
             <input
               onChange={onChangeInput}
-              className={styles.input}
+              onBlur={(e) => handleBlurChange("emailError")}
+              className={`${styles.input} ${emailError && styles.input_error}`}
               name="email"
-              id="email"
               type="email"
-              value={formValues.email}
+              value={email}
               placeholder="이메일을 입력해주세요"
             />
-            {/* <div id="email_error" className={styles.error}></div> */}
+            {emailError && <div className={styles.error}>{emailError}</div>}
           </div>
           {isSignUp && (
             <div className={styles.section}>
               <label className={styles.label}>닉네임</label>
               <input
                 onChange={onChangeInput}
+                onBlur={(e) => handleBlurChange("nicknameError")}
                 name="nickname"
-                className={styles.input}
-                id="nickname"
-                value={formValues.nickname}
+                className={`${styles.input} ${
+                  nicknameError && styles.input_error
+                }`}
+                value={nickname}
                 placeholder="닉네임을 입력해주세요"
               />
-              {/* <div id="nickname_error" className={styles.error}></div> */}
+              {nicknameError && (
+                <div className={styles.error}>{nicknameError}</div>
+              )}
             </div>
           )}
           <div className={styles.section}>
             <label className={styles.label}>비밀번호</label>
             <input
               onChange={onChangeInput}
+              onBlur={(e) => handleBlurChange("passwordError")}
               name="password"
-              className={styles.input}
-              id="password"
+              className={`${styles.input} ${
+                passwordError && styles.input_error
+              }`}
               type="password"
-              value={formValues.password}
+              value={password}
               placeholder="비밀번호를 입력해주세요"
             />
             <Image
@@ -77,18 +148,22 @@ const LoginSignupForm = ({ type }) => {
               src="/images/ic_eyes.svg"
               alt="비밀번호 숨김 아이콘"
             />
-            {/* <div id="password_error" className="error"></div> */}
+            {passwordError && (
+              <div className={styles.error}>{passwordError}</div>
+            )}
           </div>
           {isSignUp && (
             <div className={styles.section}>
               <label className={styles.label}>비밀번호 확인</label>
               <input
                 onChange={onChangeInput}
-                name="password_check"
-                className={styles.input}
-                id="password_check"
+                onBlur={(e) => handleBlurChange("passwordCheckError")}
+                name="passwordCheck"
+                className={`${styles.input} ${
+                  passwordCheckError && styles.input_error
+                }`}
                 type="password"
-                value={formValues.password_check}
+                value={passwordCheck}
                 placeholder="비밀번호를 다시 한 번 입력해주세요"
               />
               <Image
@@ -98,10 +173,12 @@ const LoginSignupForm = ({ type }) => {
                 src="/images/ic_eyes.svg"
                 alt="비밀번호 숨김 아이콘"
               />
-              {/* <div id="password_check_error" className={styles.error}></div> */}
+              {passwordCheckError && (
+                <div className={styles.error}>{passwordCheckError}</div>
+              )}
             </div>
           )}
-          <button className={styles.button} type="button" id="signup_button">
+          <button className={styles.button} type="button">
             {isSignUp ? "회원가입" : "로그인"}
           </button>
         </form>
