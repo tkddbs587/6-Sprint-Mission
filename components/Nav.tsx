@@ -2,10 +2,37 @@ import styles from "./Nav.module.css";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 const Nav = () => {
   const router = useRouter();
   const { pathname } = router;
+
+  const [accessToken, setAccessToken] = useState<string | null>(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+    setAccessToken(token);
+
+    const handleRouteChange = () => {
+      const updatedToken = localStorage.getItem("accessToken");
+      setAccessToken(updatedToken);
+    };
+
+    router.events.on("routeChangeComplete", handleRouteChange);
+
+    const handleStorageChange = (event: StorageEvent) => {
+      if (event.key === "accessToken") {
+        setAccessToken(event.newValue);
+      }
+    };
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      router.events.off("routeChangeComplete", handleRouteChange);
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, [router.events]);
 
   return (
     <div className={styles.Nav}>
@@ -33,13 +60,19 @@ const Nav = () => {
         <Link href="/items">중고마켓</Link>
       </div>
 
-      <Image
-        className={styles.logo}
-        src="../images/logo.svg"
-        alt="상단로고"
-        width={40}
-        height={40}
-      />
+      {accessToken ? (
+        <Image
+          className={styles.logo}
+          src="../images/logo.svg"
+          alt="상단로고"
+          width={40}
+          height={40}
+        />
+      ) : (
+        <Link href="/login" className={styles.login}>
+          로그인
+        </Link>
+      )}
     </div>
   );
 };
