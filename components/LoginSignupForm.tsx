@@ -14,8 +14,6 @@ import { useRouter } from "next/router";
 const LoginSignupForm = ({ type }: { type: string }) => {
   const router = useRouter();
 
-  // const accessToken = localStorage?.getItem("accessToken");
-
   const isSignUp = type === "signup";
 
   const [formValues, setFormValues] = useState({
