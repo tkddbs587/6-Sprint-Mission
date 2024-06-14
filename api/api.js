@@ -88,3 +88,32 @@ export async function getAccessToken() {
   const accessToken = data.accessToken;
   return accessToken;
 }
+
+export async function signUpUser(formValues) {
+  const res = await fetch(`${BASE_URL}/auth/signUp`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(formValues),
+  });
+  const data = await res.json();
+  return data.user?.id;
+}
+
+export async function signInUser({ email, password }) {
+  const res = await fetch(`${BASE_URL}/auth/signIn`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      email,
+      password,
+    }),
+  });
+  const data = await res.json();
+  const accessToken = data.accessToken;
+  localStorage.setItem("accessToken", accessToken);
+  return data.user?.id;
+}

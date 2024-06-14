@@ -1,62 +1,71 @@
 import styles from "@/components/LoginSignupForm.module.css";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
+import {
+  validateEmail,
+  validateNickname,
+  validatePassword,
+  validatePasswordConfirmation,
+} from "../utils/validateForm";
+import { signInUser, signUpUser } from "@/api/api";
+import { useRouter } from "next/router";
 
-const LoginSignupForm = ({ type }) => {
+const LoginSignupForm = ({ type }: { type: string }) => {
+  const router = useRouter();
+
+  // const accessToken = localStorage?.getItem("accessToken");
+
   const isSignUp = type === "signup";
+
   const [formValues, setFormValues] = useState({
     email: "",
     nickname: "",
     password: "",
-    passwordCheck: "",
+    passwordConfirmation: "",
   });
-  const { email, nickname, password, passwordCheck } = formValues;
+  const { email, nickname, password, passwordConfirmation } = formValues;
+
   const [errors, setErrors] = useState({
     emailError: "",
     nicknameError: "",
     passwordError: "",
-    passwordCheckError: "",
+    passwordConfirmationError: "",
   });
-  const { emailError, nicknameError, passwordError, passwordCheckError } =
-    errors;
+  const {
+    emailError,
+    nicknameError,
+    passwordError,
+    passwordConfirmationError,
+  } = errors;
 
-  function validateEmail(email) {
-    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
-    if (!email) {
-      return "이메일을 입력해주세요.";
-    } else if (!emailRegex.test(email)) {
-      return "잘못된 이메일 형식입니다.";
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const accessToken = localStorage.getItem("accessToken");
+      if (accessToken) {
+        router.push("/");
+      }
+    }
+  }, []);
+
+  const isFormValid = () => {
+    if (isSignUp) {
+      return (
+        email &&
+        nickname &&
+        password &&
+        passwordConfirmation &&
+        !emailError &&
+        !nicknameError &&
+        !passwordError &&
+        !passwordConfirmationError
+      );
     } else {
-      return "";
+      return email && password && !emailError && !passwordError;
     }
-  }
+  };
 
-  function validateNickname(nickname) {
-    if (!nickname) {
-      return "닉네임을 입력해주세요.";
-    } else {
-      return "";
-    }
-  }
-
-  function validatePassword(password) {
-    if (!password) {
-      return "비밀번호를 입력해주세요";
-    } else if (password.length < 8) {
-      return "비밀번호를 8자 이상 입력해주세요.";
-    } else {
-      return "";
-    }
-  }
-
-  function validatePasswordCheck(password, passwordCheck) {
-    if (password !== passwordCheck) {
-      return "비밀번호가 일치하지 않습니다.";
-    }
-  }
-
-  function handleBlurChange(field) {
+  function handleBlurChange(field: string) {
     let error = "";
     switch (field) {
       case "emailError":
@@ -68,8 +77,8 @@ const LoginSignupForm = ({ type }) => {
       case "passwordError":
         error = validatePassword(password);
         break;
-      case "passwordCheckError":
-        error = validatePasswordCheck(password, passwordCheck);
+      case "passwordConfirmationError":
+        error = validatePasswordConfirmation(password, passwordConfirmation);
         break;
       default:
         break;
@@ -77,12 +86,28 @@ const LoginSignupForm = ({ type }) => {
     setErrors({ ...errors, [field]: error });
   }
 
-  const onChangeInput = (e) => {
+  const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormValues((prevValues) => ({
       ...prevValues,
       [name]: value,
     }));
+  };
+
+  const handleFormSubmit = async (e: SyntheticEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (isSignUp) {
+      const userId = await signUpUser(formValues);
+      console.log(userId);
+      if (userId) {
+        router.push("/login");
+      }
+    } else {
+      const userId = await signInUser({ email, password });
+      if (userId) {
+        router.push("/");
+      }
+    }
   };
 
   return (
@@ -96,7 +121,7 @@ const LoginSignupForm = ({ type }) => {
         />
       </Link>
       <div className={styles.container}>
-        <form className={styles.form}>
+        <form className={styles.form} onSubmit={handleFormSubmit}>
           <div className={styles.section}>
             <label className={styles.label}>이메일</label>
             <input
@@ -157,13 +182,13 @@ const LoginSignupForm = ({ type }) => {
               <label className={styles.label}>비밀번호 확인</label>
               <input
                 onChange={onChangeInput}
-                onBlur={(e) => handleBlurChange("passwordCheckError")}
-                name="passwordCheck"
+                onBlur={(e) => handleBlurChange("passwordConfirmationError")}
+                name="passwordConfirmation"
                 className={`${styles.input} ${
-                  passwordCheckError && styles.input_error
+                  passwordConfirmationError && styles.input_error
                 }`}
                 type="password"
-                value={passwordCheck}
+                value={passwordConfirmation}
                 placeholder="비밀번호를 다시 한 번 입력해주세요"
               />
               <Image
@@ -173,12 +198,18 @@ const LoginSignupForm = ({ type }) => {
                 src="/images/ic_eyes.svg"
                 alt="비밀번호 숨김 아이콘"
               />
-              {passwordCheckError && (
-                <div className={styles.error}>{passwordCheckError}</div>
+              {passwordConfirmationError && (
+                <div className={styles.error}>{passwordConfirmationError}</div>
               )}
             </div>
           )}
-          <button className={styles.button} type="button">
+          <button
+            className={`${styles.button} ${
+              isFormValid() && styles.active_button
+            }`}
+            type="submit"
+            disabled={!isFormValid()}
+          >
             {isSignUp ? "회원가입" : "로그인"}
           </button>
         </form>

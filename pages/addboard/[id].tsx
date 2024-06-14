@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { getArticle } from "../../api/api";
 import ArticleFeed from "../../components/ArticleFeed";
 import ArticleFeedComments from "../../components/ArticleFeedComments";
+import React from "react";
 
 const Addboard = () => {
   const router = useRouter();

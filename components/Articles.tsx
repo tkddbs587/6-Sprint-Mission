@@ -10,6 +10,8 @@ const Articles = () => {
   const [search, setSearch] = useState<string>("");
   const [order, setOrder] = useState<string>("recent");
 
+  console.log(articles);
+
   useEffect(() => {
     async function loadData() {
       const data = await getArticlesData({

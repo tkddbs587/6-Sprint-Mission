@@ -14,9 +14,6 @@ const ArticleCard = ({ item }: { item: Article }) => {
     writer: { nickname },
   } = item;
 
-  // const date = new Date(createdAt);
-  // const formattedDate = date.toISOString().split("T")[0];
-
   return (
     <Link href={`/addboard/${id}`}>
       <div className={styles.ArticleCard}>

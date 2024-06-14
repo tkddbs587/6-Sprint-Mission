@@ -3,6 +3,7 @@ import styles from "./BestArticleCard.module.css";
 import Link from "next/link";
 import { Article } from "@/types";
 import getFormattedDate from "@/utils/formatDate";
+import React from "react";
 
 const BestArticleCard = ({ article }: { article: Article }) => {
   const { id, title, likeCount, createdAt, image } = article;

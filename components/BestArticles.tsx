@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
-import { getArticlesData } from "@/api/api";
+import { Article } from "../types";
 import BestArticleCard from "./BestArticleCard";
 import styles from "./BestArticles.module.css";
 import useScreenWidth from "../hooks/useScreenWidth";
-import { Article } from "@/types";
+
+import React from "react";
+import { getArticlesData } from "../api/api";
 
 const BestArticles = () => {
   const [articles, setArticles] = useState<Article[]>([]);

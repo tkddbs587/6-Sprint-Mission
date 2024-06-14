@@ -72,12 +72,12 @@
   border-radius: 40px;
   width: 100%;
   height: 56px;
-  background-color: var(--color-blue);
+  background-color: var(--color-gray400);
   cursor: pointer;
 }
 
-.button:disabled {
-  background-color: var(--color-gray400);
+.active_button {
+  background-color: var(--color-blue);
 }
 
 .button a {
