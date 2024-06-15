@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
 import ArticleCard from "./ArticleCard";
 import ArticlesHeader from "./ArticlesHeader";
-import getArticlesData from "../api/api";
 import styles from "./Articles.module.css";
 import { Article } from "@/types";
+import { getArticlesData } from "@/api/api";
 
 const Articles = () => {
   const [articles, setArticles] = useState<Article[]>([]);
   const [search, setSearch] = useState<string>("");
   const [order, setOrder] = useState<string>("recent");
+
+  console.log(articles);
 
   useEffect(() => {
     async function loadData() {

@@ -1,12 +1,11 @@
 import Image from "next/image";
 import styles from "./ArticleFeed.module.css";
 import { Article } from "@/types";
+import getFormattedDate from "@/utils/formatDate";
 
 const ArticleFeed = ({ article }: { article: Article }) => {
   const { title, createdAt, likeCount, content } = article;
   const { nickname } = article.writer;
-  const date = new Date(createdAt);
-  const formattedDate = date.toISOString().split("T")[0];
 
   return (
     <div className={styles.ArticleFeed}>
@@ -28,7 +27,7 @@ const ArticleFeed = ({ article }: { article: Article }) => {
             alt="프로필이미지"
           />
           <div className={styles.nickname}>{nickname}</div>
-          <div className={styles.date}>{formattedDate}</div>
+          <div className={styles.date}>{getFormattedDate(createdAt)}</div>
         </div>
         <div className={styles.section_middle_right}>
           <Image

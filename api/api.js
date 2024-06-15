@@ -1,7 +1,7 @@
-const BASE_URL = "https://panda-market-api.vercel.app";
+const BASE_URL = process.env.NEXT_PUBLIC_API;
 export const RECENT = "recent";
 
-export default async function getArticlesData({
+export async function getArticlesData({
   page = 1,
   pageSize = 10,
   orderBy = RECENT,
@@ -22,16 +22,19 @@ export async function getArticle(id) {
 }
 
 export async function getArticleComments({ articleId, limit }) {
-  const res = await fetch(
-    `${BASE_URL}/articles/${articleId}/comments?limit=${limit}`
-  );
-  const data = await res.json();
-
-  return data;
+  try {
+    const res = await fetch(
+      `${BASE_URL}/articles/${articleId}/comments?limit=${limit}`,
+    );
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 export async function postArticle(values) {
-  const accessToken = await getAccessToken();
+  const accessToken = localStorage.getItem("accessToken");
 
   const res = await fetch(`${BASE_URL}/articles`, {
     method: "POST",
@@ -45,13 +48,11 @@ export async function postArticle(values) {
 }
 
 export async function postFile(file) {
-  const accessToken = await getAccessToken();
+  const accessToken = localStorage.getItem("accessToken");
 
   const res = await fetch(`${BASE_URL}/images/upload`, {
     method: "POST",
     headers: {
-      // "Content-Type": "multipart/form-data",
-      // 헤더에 "multipart/form-data"를 담아서 post 요청하니까 오류가남..
       Authorization: `Bearer ${accessToken}`,
     },
     body: file,
@@ -60,7 +61,7 @@ export async function postFile(file) {
 }
 
 export async function postArticleComment({ articleId, content }) {
-  const accessToken = await getAccessToken();
+  const accessToken = localStorage.getItem("accessToken");
   const res = await fetch(`${BASE_URL}/articles/${articleId}/comments`, {
     method: "POST",
     headers: {
@@ -72,18 +73,42 @@ export async function postArticleComment({ articleId, content }) {
   return res;
 }
 
-export async function getAccessToken() {
+export async function signUpUser(formValues) {
+  const res = await fetch(`${BASE_URL}/auth/signUp`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(formValues),
+  });
+  const data = await res.json();
+  return data.user?.id;
+}
+
+export async function signInUser({ email, password }) {
   const res = await fetch(`${BASE_URL}/auth/signIn`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      email: "hatesummer@email.com",
-      password: "password",
+      email,
+      password,
     }),
   });
   const data = await res.json();
   const accessToken = data.accessToken;
-  return accessToken;
+  localStorage.setItem("accessToken", accessToken);
+  return data.user?.id;
+}
+
+export async function deleteComment(commentId) {
+  const accessToken = localStorage.getItem("accessToken");
+
+  const res = await fetch(`${BASE_URL}/comments/${commentId}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
 }

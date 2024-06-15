@@ -1,14 +1,26 @@
-import { useState } from "react";
+import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import styles from "./FileInput.module.css";
 import Image from "next/image";
 import { postFile } from "../api/api";
 
-const FileInput = ({ setValues }) => {
-  const [inputValue, setInputValue] = useState("");
-  const [preview, setPreview] = useState();
-  const [file, setFile] = useState();
+const FileInput = ({
+  setValues,
+}: {
+  setValues: Dispatch<
+    SetStateAction<{
+      title: string;
+      content: string;
+      image: undefined;
+    }>
+  >;
+}) => {
+  const [inputValue, setInputValue] = useState<string>("");
+  const [preview, setPreview] = useState<string>();
 
-  const handleFileChange = async (e) => {
+  const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) {
+      return;
+    }
     setInputValue(e.target.value);
     const selectedFile = e.target.files[0];
     const previewUrl = URL.createObjectURL(selectedFile);
@@ -16,6 +28,7 @@ const FileInput = ({ setValues }) => {
 
     const formData = new FormData();
     formData.append("image", selectedFile);
+    // formData.get("image") 폼 데이터 안에 내용이 잘 저장되었는지 확인하는 메서드
     const fileUrlResponse = await postFile(formData);
     const fileUrlData = await fileUrlResponse.json();
 
@@ -28,7 +41,10 @@ const FileInput = ({ setValues }) => {
   };
 
   const handlePreviewDelete = () => {
-    setFile(null);
+    setValues((prev) => ({
+      ...prev,
+      image: undefined,
+    }));
     setPreview("");
     setInputValue("");
   };

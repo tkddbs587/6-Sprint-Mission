@@ -1,7 +1,7 @@
 import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
 import styles from "./ArticleFeedComments.module.css";
-import { getArticleComments } from "../api/api";
-import { postArticleComment } from "../api/api";
+import { deleteComment, getArticleComments } from "@/api/api";
+import { postArticleComment } from "@/api/api";
 import ArticleComments from "./ArticleComments";
 import { Comment } from "@/types";
 
@@ -10,14 +10,26 @@ const ArticleFeedComments = ({ id }: { id: string }) => {
   const [comments, setComments] = useState<Comment[]>([]);
   const [isChangeComments, setIsChangeComments] = useState<boolean>(false);
 
+  const isButtonDisabled = content.trim() === "" ? true : false;
+
   const handleInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
   };
-  const isButtonDisabled = content.trim() === "" ? true : false;
+
+  const handleDeleteComment = async (targetId: number) => {
+    const res = await deleteComment(targetId);
+
+    setComments((prevComments) =>
+      prevComments.filter((comment) => comment.id !== targetId),
+    );
+  };
 
   useEffect(() => {
     async function loadArticleComments(articleId: string) {
-      const data = await getArticleComments({ articleId: articleId, limit: 5 });
+      const data = await getArticleComments({
+        articleId: articleId,
+        limit: 5,
+      });
       setComments(data.list);
     }
     loadArticleComments(id);
@@ -60,7 +72,11 @@ const ArticleFeedComments = ({ id }: { id: string }) => {
       <div className={styles.comments}>
         {comments.length
           ? comments.map((comment) => (
-              <ArticleComments comment={comment} key={comment.id} />
+              <ArticleComments
+                comment={comment}
+                key={comment.id}
+                handleDeleteComment={handleDeleteComment}
+              />
             ))
           : ""}
       </div>

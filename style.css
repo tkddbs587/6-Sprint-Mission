@@ -1,0 +1,207 @@
+.banner {
+  height: 540px;
+  background-color: #cfe5ff;
+  background-repeat: no-repeat;
+  background-position: 80% bottom;
+  background-size: 1000px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#top_banner {
+  background-image: url("./image/상단배너이미지.png");
+}
+
+.banner_frame {
+  width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+#bottom_banner {
+  background-image: url("./image/하단배너이미지.png");
+  margin-top: 138px;
+}
+
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.article {
+  display: flex;
+  gap: 64px;
+  padding: 138px 0;
+}
+
+.article_2 {
+  flex-direction: row-reverse;
+  text-align: right;
+}
+
+.article_img {
+  width: 50%;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+}
+
+.footer {
+  height: 160px;
+  background-color: #111827;
+}
+
+.footer_content {
+  display: flex;
+  justify-content: space-between;
+  padding: 32px 200px 104px 200px;
+}
+
+.footer_link {
+  color: #e5e7eb;
+  display: flex;
+  gap: 30px;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.footer_link a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.social_image {
+  display: flex;
+  gap: 12px;
+}
+
+@media (min-width: 375px) and (max-width: 1199px) {
+  .header {
+    padding: 0 24px;
+  }
+
+  .banner {
+    background-position: bottom;
+  }
+
+  .br {
+    display: none;
+  }
+
+  .container {
+    padding: 24px;
+  }
+
+  .article {
+    flex-direction: column;
+    width: 100%;
+    padding: 0;
+  }
+
+  .article_img {
+    width: 100%;
+  }
+
+  .content p {
+    padding-bottom: 64px;
+  }
+
+  #top_banner {
+    height: 771px;
+    justify-content: flex-start;
+  }
+
+  #bottom_banner {
+    height: 927px;
+    text-align: center;
+    justify-content: flex-start;
+    margin-top: 0;
+  }
+
+  .banner_frame {
+    width: 100%;
+    align-items: center;
+  }
+
+  #top_banner .banner_frame {
+    padding-top: 84px;
+  }
+
+  #bottom_banner .banner_frame {
+    padding-top: 201px;
+  }
+
+  .footer_content {
+    padding: 32px 104px;
+  }
+}
+
+@media (max-width: 767px) {
+  .header {
+    padding: 0 16px;
+  }
+
+  .banner h1 {
+    font-size: 32px;
+  }
+
+  #top_banner {
+    height: 540px;
+    background-size: 627px;
+  }
+
+  .top_banner_button {
+    padding: 16px 48px;
+    font-size: 16px;
+  }
+
+  #top_banner br {
+    display: block;
+  }
+
+  #top_banner h1 {
+    line-height: 44.8px;
+    text-align: center;
+  }
+
+  #top_banner .banner_frame {
+    padding-top: 48px;
+  }
+
+  .content h1 {
+    font-size: 1.5em;
+  }
+
+  .content p {
+    font-size: 1em;
+  }
+
+  #bottom_banner {
+    height: 540px;
+    background-size: 498px;
+  }
+
+  #bottom_banner .banner_frame {
+    padding-top: 121px;
+    padding-bottom: 59px;
+  }
+
+  .footer_content {
+    padding: 32px;
+    flex-wrap: wrap;
+  }
+
+  .footer_content h4 {
+    order: 3;
+    flex: 1 1 100%;
+    margin-top: 60px;
+  }
+}

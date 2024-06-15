@@ -2,12 +2,12 @@ import Image from "next/image";
 import styles from "./BestArticleCard.module.css";
 import Link from "next/link";
 import { Article } from "@/types";
+import getFormattedDate from "@/utils/formatDate";
+import React from "react";
 
 const BestArticleCard = ({ article }: { article: Article }) => {
   const { id, title, likeCount, createdAt, image } = article;
   const { nickname } = article.writer;
-  const date = new Date(createdAt);
-  const formattedDate = date.toISOString().split("T")[0];
 
   return (
     <Link href={`/addboard/${id}`}>
@@ -50,7 +50,7 @@ const BestArticleCard = ({ article }: { article: Article }) => {
               <div className={styles.like_count}>{likeCount}</div>
             </div>
           </div>
-          <div className={styles.date}>{formattedDate}</div>
+          <div className={styles.date}>{getFormattedDate(createdAt)}</div>
         </div>
       </div>
     </Link>

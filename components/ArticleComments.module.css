@@ -15,6 +15,37 @@
   color: var(--color-gray800);
 }
 
+.kebabButton {
+  display: flex;
+  position: relative;
+}
+
+.kebab {
+  cursor: pointer;
+}
+
+.kebabMenu {
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 72px;
+  font-size: 14px;
+  border: 2px solid var(--color-gray200);
+  border-radius: 8px;
+  position: absolute;
+  left: 30px;
+}
+
+.fixButton {
+  cursor: pointer;
+}
+
+.deleteButton {
+  cursor: pointer;
+}
+
 .section_bottom {
   padding-bottom: 24px;
   display: flex;
