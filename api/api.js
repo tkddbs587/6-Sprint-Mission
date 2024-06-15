@@ -24,7 +24,7 @@ export async function getArticle(id) {
 export async function getArticleComments({ articleId, limit }) {
   try {
     const res = await fetch(
-      `${BASE_URL}/articles/${articleId}/comments?limit=${limit}`
+      `${BASE_URL}/articles/${articleId}/comments?limit=${limit}`,
     );
     const data = await res.json();
     return data;
@@ -34,7 +34,7 @@ export async function getArticleComments({ articleId, limit }) {
 }
 
 export async function postArticle(values) {
-  const accessToken = await getAccessToken();
+  const accessToken = localStorage.getItem("accessToken");
 
   const res = await fetch(`${BASE_URL}/articles`, {
     method: "POST",
@@ -48,7 +48,7 @@ export async function postArticle(values) {
 }
 
 export async function postFile(file) {
-  const accessToken = await getAccessToken();
+  const accessToken = localStorage.getItem("accessToken");
 
   const res = await fetch(`${BASE_URL}/images/upload`, {
     method: "POST",
@@ -61,7 +61,7 @@ export async function postFile(file) {
 }
 
 export async function postArticleComment({ articleId, content }) {
-  const accessToken = await getAccessToken();
+  const accessToken = localStorage.getItem("accessToken");
   const res = await fetch(`${BASE_URL}/articles/${articleId}/comments`, {
     method: "POST",
     headers: {
@@ -71,22 +71,6 @@ export async function postArticleComment({ articleId, content }) {
     body: JSON.stringify({ content }),
   });
   return res;
-}
-
-export async function getAccessToken() {
-  const res = await fetch(`${BASE_URL}/auth/signIn`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      email: "weworkhi@email.com",
-      password: "password",
-    }),
-  });
-  const data = await res.json();
-  const accessToken = data.accessToken;
-  return accessToken;
 }
 
 export async function signUpUser(formValues) {
@@ -116,4 +100,15 @@ export async function signInUser({ email, password }) {
   const accessToken = data.accessToken;
   localStorage.setItem("accessToken", accessToken);
   return data.user?.id;
+}
+
+export async function deleteComment(commentId) {
+  const accessToken = localStorage.getItem("accessToken");
+
+  const res = await fetch(`${BASE_URL}/comments/${commentId}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
 }

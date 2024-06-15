@@ -97,7 +97,7 @@ const Home = () => {
         <div className="flex justify-between px-200 pb-104 pt-32">
           <h4>©codeit - 2024</h4>
 
-          <div className="text-gray-100">
+          <div className="flex gap-30 text-gray-100">
             <a href="/privacy">Privacy Policy</a>
             <a href="/faq">FAQ</a>
           </div>
