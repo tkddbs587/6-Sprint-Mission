@@ -22,6 +22,11 @@ module.exports = {
       },
     },
 
+    screens: {
+      sm: { min: "375px", max: "767px" },
+      md: { min: "768px", max: "1199px" },
+    },
+
     colors: {
       white: "#ffffff",
       blue: "#3692FF",

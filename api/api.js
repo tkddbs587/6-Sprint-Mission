@@ -103,12 +103,47 @@ export async function signInUser({ email, password }) {
 }
 
 export async function deleteComment(commentId) {
-  const accessToken = localStorage.getItem("accessToken");
+  try {
+    const accessToken = localStorage.getItem("accessToken");
 
-  const res = await fetch(`${BASE_URL}/comments/${commentId}`, {
-    method: "DELETE",
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
+    const res = await fetch(`${BASE_URL}/comments/${commentId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    if (res.ok) {
+      return true;
+    } else {
+      const failData = await res.json();
+      throw new Error(failData.message);
+    }
+  } catch (err) {
+    window.alert(err.message);
+  }
+}
+
+export async function patchComment({ targetId, newContent }) {
+  try {
+    const accessToken = localStorage.getItem("accessToken");
+
+    const res = await fetch(`${BASE_URL}/comments/${targetId}`, {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        content: newContent,
+      }),
+    });
+    const data = await res.json();
+    if (res.ok) {
+      return data;
+    } else {
+      throw new Error(data.message);
+    }
+  } catch (err) {
+    window.alert(err.message);
+  }
 }

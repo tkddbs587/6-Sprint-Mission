@@ -1,6 +1,6 @@
 import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
 import styles from "./ArticleFeedComments.module.css";
-import { deleteComment, getArticleComments } from "@/api/api";
+import { deleteComment, getArticleComments, patchComment } from "@/api/api";
 import { postArticleComment } from "@/api/api";
 import ArticleComments from "./ArticleComments";
 import { Comment } from "@/types";
@@ -16,12 +16,27 @@ const ArticleFeedComments = ({ id }: { id: string }) => {
     setContent(e.target.value);
   };
 
-  const handleDeleteComment = async (targetId: number) => {
-    const res = await deleteComment(targetId);
+  const handlePatchComment = async (targetId: number, newContent: string) => {
+    const data: Comment = await patchComment({ targetId, newContent });
+    if (data) {
+      setComments((prevComments) =>
+        prevComments.map((comment) => {
+          if (comment.id === targetId) {
+            return data;
+          }
+          return comment;
+        }),
+      );
+    }
+  };
 
-    setComments((prevComments) =>
-      prevComments.filter((comment) => comment.id !== targetId),
-    );
+  const handleDeleteComment = async (targetId: number) => {
+    const result = await deleteComment(targetId);
+    if (result) {
+      setComments((prevComments) =>
+        prevComments.filter((comment) => comment.id !== targetId),
+      );
+    }
   };
 
   useEffect(() => {
@@ -76,6 +91,7 @@ const ArticleFeedComments = ({ id }: { id: string }) => {
                 comment={comment}
                 key={comment.id}
                 handleDeleteComment={handleDeleteComment}
+                handlePatchComment={handlePatchComment}
               />
             ))
           : ""}
