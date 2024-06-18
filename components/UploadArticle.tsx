@@ -1,25 +1,36 @@
-import { ChangeEvent, SyntheticEvent, useState } from "react";
+import {
+  ChangeEvent,
+  SyntheticEvent,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import UploadArticleHeader from "./UploadArticleHeader";
 import FileInput from "./FileInput";
 import styles from "./UploadArticle.module.css";
-import { postArticle } from "../api/api";
+import { postArticle } from "@/api/api";
 
 import { useRouter } from "next/router";
 
 const UploadArticle = () => {
   const router = useRouter();
+  const inputRef = useRef(null);
   const [values, setValues] = useState({
     title: "",
     content: "",
     image: undefined,
   });
 
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
+
   const { title, content } = values;
 
   const isButtonDisabled = (title && content).trim() === "" ? true : false;
 
   const handleInputChange = (
-    e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+    e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
   ) => {
     const { name, value } = e.target;
     onChangeInput(name, value);
@@ -47,6 +58,7 @@ const UploadArticle = () => {
           <label className={styles.label}>
             *제목
             <input
+              ref={inputRef}
               name="title"
               value={values.title}
               onChange={handleInputChange}

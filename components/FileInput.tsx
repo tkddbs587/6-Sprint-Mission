@@ -1,18 +1,18 @@
 import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import styles from "./FileInput.module.css";
 import Image from "next/image";
-import { postFile } from "../api/api";
+import { postFile } from "@/api/api";
+
+interface UploadForm {
+  title: string;
+  content: string;
+  image: undefined;
+}
 
 const FileInput = ({
   setValues,
 }: {
-  setValues: Dispatch<
-    SetStateAction<{
-      title: string;
-      content: string;
-      image: undefined;
-    }>
-  >;
+  setValues: Dispatch<SetStateAction<UploadForm>>;
 }) => {
   const [inputValue, setInputValue] = useState<string>("");
   const [preview, setPreview] = useState<string>();

@@ -13,15 +13,17 @@ const ArticleComments = ({
   handleDeleteComment: (id: number) => void;
   handlePatchComment: (id: number, newContent: string) => void;
 }) => {
-  const [kebabButton, setKebabButton] = useState(false);
+  const [kebabButtonVisible, setKebabButtonVisible] = useState(false);
   const [editMode, setEditMode] = useState(false);
 
   const { id, content, createdAt } = comment;
   const [newContent, setNewContent] = useState(content);
   const { nickname } = comment.writer;
 
+  const isButtonDisabled = newContent.trim() === "" ? true : false;
+
   const handleMenuChange = (e: MouseEvent<HTMLImageElement>) => {
-    setKebabButton(!kebabButton);
+    setKebabButtonVisible(!kebabButtonVisible);
   };
 
   const handleEditClick = () => {
@@ -45,9 +47,23 @@ const ArticleComments = ({
     <div className={styles.ArticleComments}>
       <div className={styles.section_top}>
         {editMode ? (
-          <div>
-            <textarea value={newContent} onChange={handleContentChange} />
-            <button onClick={handleEditSubmit}>수정완료</button>
+          <div className={styles.edit_mode}>
+            <div>
+              <textarea
+                className={styles.edit_input}
+                value={newContent}
+                placeholder="내용을 입력해주세요"
+                onChange={handleContentChange}
+              />
+            </div>
+            <div className={styles.section_button}>
+              <button
+                className={`${styles.edit_button} ${isButtonDisabled ? "" : styles.active}`}
+                onClick={handleEditSubmit}
+              >
+                완료
+              </button>
+            </div>
           </div>
         ) : (
           <div className={styles.content}>{content}</div>
@@ -61,7 +77,7 @@ const ArticleComments = ({
             alt="케밥아이콘"
             onClick={handleMenuChange}
           />
-          {kebabButton ? (
+          {kebabButtonVisible ? (
             <div className={styles.kebabMenu}>
               <div className={styles.fixButton} onClick={handleEditClick}>
                 수정하기

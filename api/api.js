@@ -1,5 +1,7 @@
 const BASE_URL = process.env.NEXT_PUBLIC_API;
-export const RECENT = "recent";
+
+const RECENT = "recent";
+export const PAGE_SIZE = 10;
 
 export async function getArticlesData({
   page = 1,
@@ -62,6 +64,7 @@ export async function postFile(file) {
 
 export async function postArticleComment({ articleId, content }) {
   const accessToken = localStorage.getItem("accessToken");
+
   const res = await fetch(`${BASE_URL}/articles/${articleId}/comments`, {
     method: "POST",
     headers: {
@@ -97,8 +100,12 @@ export async function signInUser({ email, password }) {
     }),
   });
   const data = await res.json();
+
   const accessToken = data.accessToken;
+  const refreshToken = data.refreshToken;
   localStorage.setItem("accessToken", accessToken);
+  localStorage.setItem("refreshToken", refreshToken);
+
   return data.user?.id;
 }
 
@@ -147,3 +154,24 @@ export async function patchComment({ targetId, newContent }) {
     window.alert(err.message);
   }
 }
+
+// export async function postRefreshToken() {
+//   const refreshToken = localStorage.getItem("refreshToken");
+
+//   const res = fetch(`${BASE_URL}/auth/refresh-token`, {
+//     method: "POST",
+//     headers: {
+//       Authorization: `Bearer ${refreshToken}`,
+//       "Content-Type": "application/json",
+//     },
+//   });
+
+//   if (res.ok) {
+//     const data = res.json();
+//     localStorage.setItem("accessToken", data.accessToken);
+//     localStorage.setItem("refreshToken", data.refreshToken);
+//     return data.accessToken;
+//   } else {
+//     throw new Error("토큰을 새로 받아오지 못했습니다");
+//   }
+// }

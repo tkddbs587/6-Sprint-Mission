@@ -1,7 +1,12 @@
 import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
 import styles from "./ArticleFeedComments.module.css";
-import { deleteComment, getArticleComments, patchComment } from "@/api/api";
-import { postArticleComment } from "@/api/api";
+import {
+  deleteComment,
+  getArticleComments,
+  patchComment,
+  postArticleComment,
+} from "@/api/api";
+
 import ArticleComments from "./ArticleComments";
 import { Comment } from "@/types";
 
@@ -43,7 +48,7 @@ const ArticleFeedComments = ({ id }: { id: string }) => {
     async function loadArticleComments(articleId: string) {
       const data = await getArticleComments({
         articleId: articleId,
-        limit: 5,
+        limit: 10,
       });
       setComments(data.list);
     }
@@ -85,16 +90,15 @@ const ArticleFeedComments = ({ id }: { id: string }) => {
         </div>
       </form>
       <div className={styles.comments}>
-        {comments.length
-          ? comments.map((comment) => (
-              <ArticleComments
-                comment={comment}
-                key={comment.id}
-                handleDeleteComment={handleDeleteComment}
-                handlePatchComment={handlePatchComment}
-              />
-            ))
-          : ""}
+        {comments.length &&
+          comments.map((comment) => (
+            <ArticleComments
+              comment={comment}
+              key={comment.id}
+              handleDeleteComment={handleDeleteComment}
+              handlePatchComment={handlePatchComment}
+            />
+          ))}
       </div>
     </div>
   );
