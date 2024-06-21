@@ -1,4 +1,5 @@
-const BASE_URL = process.env.NEXT_PUBLIC_API;
+import axios from "@/lib/axios";
+import { privateApi } from "@/lib/axios";
 
 const RECENT = "recent";
 export const PAGE_SIZE = 10;
@@ -10,26 +11,25 @@ export async function getArticlesData({
   keyword = "",
 }) {
   const query = `page=${page}&pageSize=${pageSize}&orderBy=${orderBy}&keyword=${keyword}`;
-  const res = await fetch(`${BASE_URL}/articles?${query}`);
-  const data = await res.json();
+  const res = await axios.get(`/articles?${query}`);
+  const data = res.data;
 
   return data;
 }
 
 export async function getArticle(id) {
-  const res = await fetch(`${BASE_URL}/articles/${id}`);
-  const data = await res.json();
+  const res = await axios.get(`/articles/${id}`);
+  const data = res.data;
 
   return data;
 }
 
 export async function getArticleComments({ articleId, limit }) {
   try {
-    const res = await fetch(
-      `${BASE_URL}/articles/${articleId}/comments?limit=${limit}`,
+    const res = await axios.get(
+      `/articles/${articleId}/comments?limit=${limit}`,
     );
-    const data = await res.json();
-    return data;
+    return res.data;
   } catch (error) {
     console.log(error);
   }
@@ -38,13 +38,10 @@ export async function getArticleComments({ articleId, limit }) {
 export async function postArticle(values) {
   const accessToken = localStorage.getItem("accessToken");
 
-  const res = await fetch(`${BASE_URL}/articles`, {
-    method: "POST",
+  const res = await axios.post(`/articles`, values, {
     headers: {
-      "Content-Type": "application/json",
       Authorization: `Bearer ${accessToken}`,
     },
-    body: JSON.stringify(values),
   });
   return res;
 }
@@ -52,12 +49,11 @@ export async function postArticle(values) {
 export async function postFile(file) {
   const accessToken = localStorage.getItem("accessToken");
 
-  const res = await fetch(`${BASE_URL}/images/upload`, {
-    method: "POST",
+  const res = await axios.post(`/images/upload`, file, {
     headers: {
+      "Content-Type": "multipart/form-data",
       Authorization: `Bearer ${accessToken}`,
     },
-    body: file,
   });
   return res;
 }
@@ -65,41 +61,39 @@ export async function postFile(file) {
 export async function postArticleComment({ articleId, content }) {
   const accessToken = localStorage.getItem("accessToken");
 
-  const res = await fetch(`${BASE_URL}/articles/${articleId}/comments`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${accessToken}`,
+  const res = await axios.post(
+    `/articles/${articleId}/comments`,
+    { content },
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
     },
-    body: JSON.stringify({ content }),
-  });
+  );
   return res;
 }
 
 export async function signUpUser(formValues) {
-  const res = await fetch(`${BASE_URL}/auth/signUp`, {
-    method: "POST",
+  const res = await axios.post(`/auth/signUp`, formValues, {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(formValues),
   });
-  const data = await res.json();
+  const data = res.data;
   return data.user?.id;
 }
 
 export async function signInUser({ email, password }) {
-  const res = await fetch(`${BASE_URL}/auth/signIn`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
+  const res = await axios.post(
+    `/auth/signIn`,
+    { email, password },
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
     },
-    body: JSON.stringify({
-      email,
-      password,
-    }),
-  });
-  const data = await res.json();
+  );
+  const data = res.data;
 
   const accessToken = data.accessToken;
   const refreshToken = data.refreshToken;
@@ -113,8 +107,7 @@ export async function deleteComment(commentId) {
   try {
     const accessToken = localStorage.getItem("accessToken");
 
-    const res = await fetch(`${BASE_URL}/comments/${commentId}`, {
-      method: "DELETE",
+    const res = await axios.delete(`/comments/${commentId}`, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
@@ -122,7 +115,7 @@ export async function deleteComment(commentId) {
     if (res.ok) {
       return true;
     } else {
-      const failData = await res.json();
+      const failData = res.data;
       throw new Error(failData.message);
     }
   } catch (err) {
@@ -134,17 +127,16 @@ export async function patchComment({ targetId, newContent }) {
   try {
     const accessToken = localStorage.getItem("accessToken");
 
-    const res = await fetch(`${BASE_URL}/comments/${targetId}`, {
-      method: "PATCH",
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        "Content-Type": "application/json",
+    const res = await axios.patch(
+      `/comments/${targetId}`,
+      { newContent },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
       },
-      body: JSON.stringify({
-        content: newContent,
-      }),
-    });
-    const data = await res.json();
+    );
+    const data = res.data;
     if (res.ok) {
       return data;
     } else {
@@ -158,16 +150,14 @@ export async function patchComment({ targetId, newContent }) {
 // export async function postRefreshToken() {
 //   const refreshToken = localStorage.getItem("refreshToken");
 
-//   const res = fetch(`${BASE_URL}/auth/refresh-token`, {
-//     method: "POST",
+//   const res = axios.post(`/auth/refresh-token`, {
 //     headers: {
 //       Authorization: `Bearer ${refreshToken}`,
-//       "Content-Type": "application/json",
 //     },
 //   });
 
 //   if (res.ok) {
-//     const data = res.json();
+//     const data = res.data;
 //     localStorage.setItem("accessToken", data.accessToken);
 //     localStorage.setItem("refreshToken", data.refreshToken);
 //     return data.accessToken;

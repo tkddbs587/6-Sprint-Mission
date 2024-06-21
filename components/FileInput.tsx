@@ -30,7 +30,7 @@ const FileInput = ({
     formData.append("image", selectedFile);
     // formData.get("image") 폼 데이터 안에 내용이 잘 저장되었는지 확인하는 메서드
     const fileUrlResponse = await postFile(formData);
-    const fileUrlData = await fileUrlResponse.json();
+    const fileUrlData = await fileUrlResponse.data;
 
     setValues((prev) => {
       return {

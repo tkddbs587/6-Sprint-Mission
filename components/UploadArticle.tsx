@@ -46,7 +46,7 @@ const UploadArticle = () => {
   const handleFormSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     postArticle(values)
-      .then((res) => res.json())
+      .then((res) => res.data)
       .then((data) => data.id && router.push(`/addboard/${data.id}`));
   };
 
