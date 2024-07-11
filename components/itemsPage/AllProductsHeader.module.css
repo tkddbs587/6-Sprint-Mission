@@ -18,9 +18,8 @@
 }
 
 .search_icon {
-  background-color: #f3f4f6;
   position: relative;
-  top: 10px;
+  top: -2px;
   left: 52px;
 }
 

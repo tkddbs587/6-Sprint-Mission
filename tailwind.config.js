@@ -3,7 +3,7 @@
 const px0_50 = { ...Array.from(Array(51)).map((_, i) => `${i}px`) };
 const px0_100 = { ...Array.from(Array(101)).map((_, i) => `${i}px`) };
 const px0_200 = { ...Array.from(Array(201)).map((_, i) => `${i}px`) };
-const px0_400 = { ...Array.from(Array(401)).map((_, i) => `${i}px`) };
+const px0_1920 = { ...Array.from(Array(1921)).map((_, i) => `${i}px`) };
 
 module.exports = {
   content: [
@@ -16,7 +16,9 @@ module.exports = {
       borderRadius: px0_50,
       fontSize: px0_100,
       spacing: px0_200,
-      width: px0_400,
+      width: px0_1920,
+      height: px0_1920,
+      padding: px0_1920,
       backgroundPosition: {
         "80%-bottom": "80% bottom",
       },
