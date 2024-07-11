@@ -5,7 +5,7 @@ import AllProductsHeader from "@/components/itemsPage/AllProductsHeader";
 import styles from "@/components/itemsPage/AllProducts.module.css";
 import PagiNation from "@/components/itemsPage/PagiNation";
 import Product from "@/types/product";
-import getProductsData, { PAGE_SIZE } from "@/api/products";
+import getProductsData, { PAGE_SIZE } from "@/api/products/products";
 
 const AllProducts = () => {
   const [products, setProducts] = useState<Product[]>();

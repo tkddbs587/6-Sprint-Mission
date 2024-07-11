@@ -3,11 +3,10 @@ import styles from "@/components/itemsPage/BestProducts.module.css";
 import ProductCard from "@/components/itemsPage/ProductCard";
 
 import Product from "@/types/product";
-import getProductsData from "@/api/products";
+import getProductsData from "@/api/products/products";
 
 const BestProducts = () => {
   const [products, setProducts] = useState<Product[]>();
-  console.log(products);
 
   useEffect(() => {
     async function fetchData() {

@@ -1,6 +1,6 @@
 import Product from "@/types/product";
-// import styles from "@/components/itemsPage/ProductCard.module.css";
 import Image from "next/image";
+import Link from "next/link";
 
 const ProductCard = ({
   item,
@@ -14,11 +14,12 @@ const ProductCard = ({
   return (
     <div className="mb-16 flex flex-col gap-16">
       {images ? (
-        <div
+        <Link
+          href={`/items/${item.id}`}
           className={` ${bestSize ? "h-343 md:h-336 xl:h-282 relative aspect-square w-343 rounded-16 md:w-336 xl:w-282" : "md:h-221 relative aspect-square h-168 w-168 rounded-16 md:w-221"}`}
         >
           <Image src={images[0]} fill alt="product" />
-        </div>
+        </Link>
       ) : (
         ""
       )}
