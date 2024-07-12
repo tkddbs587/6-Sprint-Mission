@@ -26,10 +26,16 @@ const ProductArticle = () => {
 
   return (
     <div className="md: flex flex-col gap-24 md:flex-row md:gap-13 xl:gap-24">
-      <div className="h-343 relative w-343 rounded-12">
-        <Image fill src={product.images[0]} alt="상품 이미지" />
+      <div className="md:h-340 xl:w-486 xl:h-486 rounded-12 md:w-340">
+        <Image
+          layout="responsive"
+          width={343}
+          height={343}
+          src={product.images[0]}
+          alt="상품 이미지"
+        />
       </div>
-      <div className="flex flex-col gap-24">
+      <div className="flex flex-1 flex-col gap-24">
         <div className="border-gray-20 gap-4 border-b border-solid pb-12">
           <div className="flex justify-between">
             <div className="text-black-800 text-20 font-semibold leading-[32px]">
