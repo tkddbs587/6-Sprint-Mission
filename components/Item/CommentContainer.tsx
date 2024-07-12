@@ -26,6 +26,10 @@ const CommentContainer = () => {
     }
   }, [isReady, query.productId]);
 
+  const handleMovePrevPage = () => {
+    router.replace("/items");
+  };
+
   if (!comments) return null;
 
   return (
@@ -49,7 +53,10 @@ const CommentContainer = () => {
           <CommentList key={comment.id} comment={comment} />
         ))
       )}
-      <button className="mx-auto mt-82 flex h-max w-max items-center gap-8 rounded-40 bg-blue px-64 py-12 text-18 font-semibold leading-[26px] text-white md:mt-79">
+      <button
+        onClick={handleMovePrevPage}
+        className="mx-auto mt-82 flex h-max w-max items-center gap-8 rounded-40 bg-blue px-64 py-12 text-18 font-semibold leading-[26px] text-white md:mt-79"
+      >
         목록으로 돌아가기{" "}
         <Image
           src="/images/ic_return.svg"
