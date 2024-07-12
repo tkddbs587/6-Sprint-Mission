@@ -7,3 +7,16 @@ const getProductComments = async (productId: number) => {
 };
 
 export default getProductComments;
+
+export const postProductComment = async ({
+  productId,
+  inputValue,
+}: {
+  productId: number;
+  inputValue: string;
+}) => {
+  const res = await axios.post(`products/${productId}/comments`, {
+    content: inputValue,
+  });
+  return res.data;
+};

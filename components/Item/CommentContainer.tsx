@@ -9,6 +9,8 @@ import Image from "next/image";
 
 const CommentContainer = () => {
   const [comments, setComments] = useState<Comment[]>();
+  const [isChangeComment, setIsChangeComment] = useState(false);
+
   const router = useRouter();
   const { query, isReady } = router;
 
@@ -24,7 +26,7 @@ const CommentContainer = () => {
         loadComments();
       }
     }
-  }, [isReady, query.productId]);
+  }, [isReady, query.productId, isChangeComment]);
 
   const handleMovePrevPage = () => {
     router.replace("/items");
@@ -34,7 +36,10 @@ const CommentContainer = () => {
 
   return (
     <div className="flex flex-col gap-16 md:gap-24">
-      <CommentForm />
+      <CommentForm
+        productId={Number(query.productId)}
+        setIsChangeComment={setIsChangeComment}
+      />
       {comments.length === 0 ? (
         <div className="flex flex-col items-center">
           <div className="relative h-140 w-140 md:h-196 md:w-196">

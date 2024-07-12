@@ -19,9 +19,15 @@ const CommentList = ({ comment }: { comment: Comment }) => {
             />
           </div>
           <div className="flex items-center gap-8">
-            <div className="relative h-32 w-32">
-              <Image fill src={comment.writer.image} alt="작성자 이미지" />
-            </div>
+            {comment.writer.image ? (
+              <div className="relative h-32 w-32">
+                <Image fill src={comment.writer.image} alt="작성자 이미지" />
+              </div>
+            ) : (
+              <div className="bg-violet-20 flex-center h-32 w-32 rounded-full text-12 font-semibold leading-[15px] text-white">
+                {comment.writer.nickname.charAt(0).toUpperCase()}
+              </div>
+            )}
 
             <div className="flex flex-col gap-4">
               <div className="text-gray-600 text-12 font-normal leading-[18px]">
