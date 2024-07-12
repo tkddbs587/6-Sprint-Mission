@@ -32,3 +32,7 @@ export const patchProductComment = async ({
     content: newValue,
   });
 };
+
+export const deleteProductComment = async (commentId) => {
+  const res = await axios.delete(`/comments/${commentId}`);
+};

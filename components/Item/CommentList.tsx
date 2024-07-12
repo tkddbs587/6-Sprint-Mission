@@ -1,6 +1,7 @@
 import { patchProductComment } from "@/api/products/productComments";
 import { Comment } from "@/types";
 import formatTimeAgo from "@/utils/formatTimeAgo";
+import axios from "@/lib/axios";
 import Image from "next/image";
 import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 
@@ -30,6 +31,12 @@ const CommentList = ({
 
   const handlePatchComment = async () => {
     await patchProductComment({ commentId: comment.id, newValue });
+    setIsChangeComment((prev) => !prev);
+    setIsEditInput(!isEditInput);
+  };
+
+  const handleDeleteComment = async () => {
+    await axios.delete(`/comments/${comment.id}`);
     setIsChangeComment((prev) => !prev);
     setIsEditInput(!isEditInput);
   };
@@ -67,16 +74,16 @@ const CommentList = ({
               alt="케밥아이콘"
             />
             {isOpenDropdown ? (
-              <div className="border-1px-solid-gray-30 flex-center absolute right-8 top-24 h-64 w-72 flex-col rounded-6 bg-white py-6 text-12 md:h-74 md:w-86">
+              <div className="border-1px-solid-gray-30 flex-center absolute right-8 top-24 h-64 w-72 flex-col rounded-6 bg-white py-6 text-12 md:h-74 md:w-86 md:text-14">
                 <div
                   onClick={handleEditComment}
-                  className="text-black-900 flex-center cursor-pointer px-8 py-4 hover:rounded-4 hover:bg-skyblue"
+                  className="text-black-900 flex-center cursor-pointer px-8 py-4 hover:rounded-4 hover:bg-skyblue md:px-12"
                 >
                   수정하기
                 </div>
                 <div
-                  // onClick={handleDeleteComment}
-                  className="text-black-900 flex-center cursor-pointer px-8 py-4 hover:rounded-4 hover:bg-skyblue"
+                  onClick={handleDeleteComment}
+                  className="text-black-900 flex-center cursor-pointer px-8 py-4 hover:rounded-4 hover:bg-skyblue md:px-12"
                 >
                   삭제하기
                 </div>

@@ -8,7 +8,7 @@ const CommentForm = ({
   setIsChangeComment: Dispatch<SetStateAction<boolean>>;
   productId: number;
 }) => {
-  const [inputValue, setInputValue] = useState("second");
+  const [inputValue, setInputValue] = useState("");
 
   const validation = inputValue.trim() === "" ? true : false;
 
