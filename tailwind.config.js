@@ -47,5 +47,20 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addUtilities }) {
+      addUtilities({
+        // 회색 테두리 스타일링
+        ".border-1px-solid-gray-30": {
+          border: "1px solid #D9D9D9",
+        },
+        // flex로 가운데 정렬시 3개 한번에 적용해줌
+        ".flex-center": {
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        },
+      });
+    },
+  ],
 };

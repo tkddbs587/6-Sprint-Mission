@@ -55,7 +55,11 @@ const CommentContainer = () => {
         </div>
       ) : (
         comments.map((comment: Comment) => (
-          <CommentList key={comment.id} comment={comment} />
+          <CommentList
+            setIsChangeComment={setIsChangeComment}
+            key={comment.id}
+            comment={comment}
+          />
         ))
       )}
       <button

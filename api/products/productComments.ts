@@ -20,3 +20,15 @@ export const postProductComment = async ({
   });
   return res.data;
 };
+
+export const patchProductComment = async ({
+  commentId,
+  newValue,
+}: {
+  commentId: number;
+  newValue: string;
+}) => {
+  const res = await axios.patch(`/comments/${commentId}`, {
+    content: newValue,
+  });
+};
