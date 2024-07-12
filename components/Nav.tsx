@@ -35,41 +35,49 @@ const Nav = () => {
   }, [router.events]);
 
   return (
-    <div className={styles.Nav}>
+    <div className="fixed top-0 z-10 flex w-full items-center justify-between border-b border-solid border-[#dfdfdf] bg-white px-16 py-10 md:px-24 md:py-10 xl:px-[8vw] xl:py-10">
       <Image
-        className={styles.panda_logo}
+        className="hidden md:block"
         src="../images/panda_logo.svg"
         alt="판다로고"
         width={153}
         height={51}
       />
       <Image
-        className={styles.mobile_logo}
+        className="md:hidden"
         src="../images/panda_logo_text.svg"
         alt="모바일상단로고"
         width={81}
         height={40}
       />
-      <div className={styles.links}>
+      <div className="ml-0 flex items-center md:ml-32">
         <Link
           href="/boards"
-          className={pathname === "/boards" ? styles.active : ""}
+          className={`bg-white pl-16 text-16 font-bold text-[#4b5563] no-underline md:p-16 md:text-18 ${pathname === "/boards" ? "text-blue" : ""}`}
         >
           자유게시판
         </Link>
-        <Link href="/items">중고마켓</Link>
+        <Link
+          className={`bg-white p-16 text-18 font-bold text-[#4b5563] no-underline md:p-16 md:text-18 ${pathname === "/items" ? "text-blue" : ""} `}
+          href="/items"
+        >
+          중고마켓
+        </Link>
       </div>
 
       {accessToken ? (
         <Image
-          className={styles.logo}
+          className="ml-auto"
           src="../images/logo.svg"
           alt="상단로고"
           width={40}
           height={40}
         />
       ) : (
-        <Link href="/login" className={styles.login}>
+        <Link
+          href="/login"
+          className="ml-auto flex h-48 w-128 justify-center rounded-8 bg-blue px-20 py-12 text-16 font-semibold text-white"
+        >
           로그인
         </Link>
       )}

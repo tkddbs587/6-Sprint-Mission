@@ -31,9 +31,24 @@ const CommentContainer = () => {
   return (
     <div className="flex flex-col gap-16 md:gap-24">
       <CommentForm />
-      {comments.map((comment: Comment) => (
-        <CommentList key={comment.id} comment={comment} />
-      ))}
+      {comments.length === 0 ? (
+        <div className="flex flex-col items-center">
+          <div className="relative h-140 w-140 md:h-196 md:w-196">
+            <Image
+              src="/images/ic_panda_no_comment.svg"
+              fill
+              alt="댓글 없음 판다이미지"
+            />
+          </div>
+          <div className="text-gray-400 text-18 font-normal leading-[26px]">
+            아직 문의가 없습니다.
+          </div>
+        </div>
+      ) : (
+        comments.map((comment: Comment) => (
+          <CommentList key={comment.id} comment={comment} />
+        ))
+      )}
       <button className="mx-auto mt-82 flex h-max w-max items-center gap-8 rounded-40 bg-blue px-64 py-12 text-18 font-semibold leading-[26px] text-white md:mt-79">
         목록으로 돌아가기{" "}
         <Image
