@@ -1,18 +1,18 @@
 import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import styles from "./FileInput.module.css";
 import Image from "next/image";
-import { postFile } from "../api/api";
+import { postFile } from "@/api/api";
+
+interface UploadForm {
+  title: string;
+  content: string;
+  image: undefined;
+}
 
 const FileInput = ({
   setValues,
 }: {
-  setValues: Dispatch<
-    SetStateAction<{
-      title: string;
-      content: string;
-      image: undefined;
-    }>
-  >;
+  setValues: Dispatch<SetStateAction<UploadForm>>;
 }) => {
   const [inputValue, setInputValue] = useState<string>("");
   const [preview, setPreview] = useState<string>();
@@ -30,7 +30,7 @@ const FileInput = ({
     formData.append("image", selectedFile);
     // formData.get("image") 폼 데이터 안에 내용이 잘 저장되었는지 확인하는 메서드
     const fileUrlResponse = await postFile(formData);
-    const fileUrlData = await fileUrlResponse.json();
+    const fileUrlData = await fileUrlResponse.data;
 
     setValues((prev) => {
       return {

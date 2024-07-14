@@ -3,7 +3,7 @@
 const px0_50 = { ...Array.from(Array(51)).map((_, i) => `${i}px`) };
 const px0_100 = { ...Array.from(Array(101)).map((_, i) => `${i}px`) };
 const px0_200 = { ...Array.from(Array(201)).map((_, i) => `${i}px`) };
-const px0_400 = { ...Array.from(Array(401)).map((_, i) => `${i}px`) };
+const px0_1920 = { ...Array.from(Array(1921)).map((_, i) => `${i}px`) };
 
 module.exports = {
   content: [
@@ -16,7 +16,9 @@ module.exports = {
       borderRadius: px0_50,
       fontSize: px0_100,
       spacing: px0_200,
-      width: px0_400,
+      width: px0_1920,
+      height: px0_1920,
+      padding: px0_1920,
       backgroundPosition: {
         "80%-bottom": "80% bottom",
       },
@@ -27,12 +29,38 @@ module.exports = {
       blue: "#3692FF",
       skyblue: "#CFE5FF",
       gray: {
+        10: "#F3F4F6",
+        20: "#E5E7EB",
+        50: "#F9FAFB",
         100: "#CFCFCF",
         200: "#676767",
+        400: "#9CA3AF",
+        500: "#6B7280",
+        600: "#4B5563",
         700: "#374151",
       },
-      black: "#000000",
+      black: {
+        DEFAULT: "#000000",
+
+        800: "#1F2937",
+        900: "#111827",
+      },
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addUtilities }) {
+      addUtilities({
+        // 회색 테두리 스타일링
+        ".border-1px-solid-gray-30": {
+          border: "1px solid #D9D9D9",
+        },
+        // flex로 가운데 정렬시 3개 한번에 적용해줌
+        ".flex-center": {
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        },
+      });
+    },
+  ],
 };

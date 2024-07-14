@@ -1,7 +1,12 @@
 import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
 import styles from "./ArticleFeedComments.module.css";
-import { deleteComment, getArticleComments } from "@/api/api";
-import { postArticleComment } from "@/api/api";
+import {
+  deleteComment,
+  getArticleComments,
+  patchComment,
+  postArticleComment,
+} from "@/api/api";
+
 import ArticleComments from "./ArticleComments";
 import { Comment } from "@/types";
 
@@ -16,19 +21,34 @@ const ArticleFeedComments = ({ id }: { id: string }) => {
     setContent(e.target.value);
   };
 
-  const handleDeleteComment = async (targetId: number) => {
-    const res = await deleteComment(targetId);
+  const handlePatchComment = async (targetId: number, newContent: string) => {
+    const data: Comment = await patchComment({ targetId, newContent });
+    if (data) {
+      setComments((prevComments) =>
+        prevComments.map((comment) => {
+          if (comment.id === targetId) {
+            return data;
+          }
+          return comment;
+        }),
+      );
+    }
+  };
 
-    setComments((prevComments) =>
-      prevComments.filter((comment) => comment.id !== targetId),
-    );
+  const handleDeleteComment = async (targetId: number) => {
+    const result = await deleteComment(targetId);
+    if (result) {
+      setComments((prevComments) =>
+        prevComments.filter((comment) => comment.id !== targetId),
+      );
+    }
   };
 
   useEffect(() => {
     async function loadArticleComments(articleId: string) {
       const data = await getArticleComments({
         articleId: articleId,
-        limit: 5,
+        limit: 10,
       });
       setComments(data.list);
     }
@@ -70,15 +90,15 @@ const ArticleFeedComments = ({ id }: { id: string }) => {
         </div>
       </form>
       <div className={styles.comments}>
-        {comments.length
-          ? comments.map((comment) => (
-              <ArticleComments
-                comment={comment}
-                key={comment.id}
-                handleDeleteComment={handleDeleteComment}
-              />
-            ))
-          : ""}
+        {comments.length &&
+          comments.map((comment) => (
+            <ArticleComments
+              comment={comment}
+              key={comment.id}
+              handleDeleteComment={handleDeleteComment}
+              handlePatchComment={handlePatchComment}
+            />
+          ))}
       </div>
     </div>
   );

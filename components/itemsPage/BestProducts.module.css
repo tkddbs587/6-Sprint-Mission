@@ -1,0 +1,30 @@
+.BestProducts {
+  margin-bottom: 24px;
+}
+
+.best_item {
+  padding-top: 24px;
+  padding-bottom: 16px;
+  color: #111827;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.products_list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+@media (min-width: 768px) and (max-width: 1200px) {
+  .products_list {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+}
+
+@media all and (max-width: 767px) {
+  .products_list {
+    grid-template-columns: 1fr;
+  }
+}

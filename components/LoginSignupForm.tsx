@@ -7,7 +7,7 @@ import {
   validateNickname,
   validatePassword,
   validatePasswordConfirmation,
-} from "../utils/validateForm";
+} from "@/utils/validateForm";
 import { signInUser, signUpUser } from "@/api/api";
 import { useRouter } from "next/router";
 
@@ -96,7 +96,7 @@ const LoginSignupForm = ({ type }: { type: string }) => {
     e.preventDefault();
     if (isSignUp) {
       const userId = await signUpUser(formValues);
-      console.log(userId);
+
       if (userId) {
         router.push("/login");
       }

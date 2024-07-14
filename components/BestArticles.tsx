@@ -4,8 +4,7 @@ import BestArticleCard from "./BestArticleCard";
 import styles from "./BestArticles.module.css";
 import useScreenWidth from "../hooks/useScreenWidth";
 
-import React from "react";
-import { getArticlesData } from "../api/api";
+import { getArticlesData } from "@/api/api";
 
 const BestArticles = () => {
   const [articles, setArticles] = useState<Article[]>([]);

@@ -1,0 +1,15 @@
+.Items {
+  padding: 24px 15vw;
+}
+
+@media (min-width: 768px) and (max-width: 1200px) {
+  .Items {
+    padding: 24px;
+  }
+}
+
+@media all and (max-width: 767px) {
+  .Items {
+    padding: 16px;
+  }
+}

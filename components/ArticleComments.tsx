@@ -2,22 +2,41 @@ import { Comment } from "@/types";
 import styles from "./ArticleComments.module.css";
 import Image from "next/image";
 import getFormattedDate from "@/utils/formatDate";
-import { Dispatch, MouseEvent, SetStateAction, useState } from "react";
+import { ChangeEvent, MouseEvent, useState } from "react";
 
 const ArticleComments = ({
   comment,
   handleDeleteComment,
+  handlePatchComment,
 }: {
   comment: Comment;
   handleDeleteComment: (id: number) => void;
+  handlePatchComment: (id: number, newContent: string) => void;
 }) => {
-  const [kebabButton, setKebabButton] = useState(false);
+  const [kebabButtonVisible, setKebabButtonVisible] = useState(false);
+  const [editMode, setEditMode] = useState(false);
 
   const { id, content, createdAt } = comment;
+  const [newContent, setNewContent] = useState(content);
   const { nickname } = comment.writer;
 
+  const isButtonDisabled = newContent.trim() === "" ? true : false;
+
   const handleMenuChange = (e: MouseEvent<HTMLImageElement>) => {
-    setKebabButton(!kebabButton);
+    setKebabButtonVisible(!kebabButtonVisible);
+  };
+
+  const handleEditClick = () => {
+    setEditMode(true);
+  };
+
+  const handleContentChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setNewContent(e.target.value);
+  };
+
+  const handleEditSubmit = async () => {
+    handlePatchComment(id, newContent);
+    setEditMode(false);
   };
 
   const handleDeleteButton = () => {
@@ -27,7 +46,28 @@ const ArticleComments = ({
   return (
     <div className={styles.ArticleComments}>
       <div className={styles.section_top}>
-        <div className={styles.content}>{content}</div>
+        {editMode ? (
+          <div className={styles.edit_mode}>
+            <div>
+              <textarea
+                className={styles.edit_input}
+                value={newContent}
+                placeholder="내용을 입력해주세요"
+                onChange={handleContentChange}
+              />
+            </div>
+            <div className={styles.section_button}>
+              <button
+                className={`${styles.edit_button} ${isButtonDisabled ? "" : styles.active}`}
+                onClick={handleEditSubmit}
+              >
+                완료
+              </button>
+            </div>
+          </div>
+        ) : (
+          <div className={styles.content}>{content}</div>
+        )}
         <div className={styles.kebabButton}>
           <Image
             className={styles.kebab}
@@ -37,9 +77,11 @@ const ArticleComments = ({
             alt="케밥아이콘"
             onClick={handleMenuChange}
           />
-          {kebabButton ? (
+          {kebabButtonVisible ? (
             <div className={styles.kebabMenu}>
-              <div className={styles.fixButton}>수정하기</div>
+              <div className={styles.fixButton} onClick={handleEditClick}>
+                수정하기
+              </div>
               <div className={styles.deleteButton} onClick={handleDeleteButton}>
                 삭제하기
               </div>

@@ -9,7 +9,7 @@ const Home = () => {
         <div className="mx-auto my-0 flex w-[1200px] flex-col gap-32">
           <h1>
             일상의 모든 물건을
-            <br className="hidden" />
+            <br className="hidden md:block" />
             거래해 보세요
           </h1>
           <Link
@@ -43,7 +43,7 @@ const Home = () => {
             </p>
           </div>
         </div>
-        <div className="flex flex-row-reverse gap-64 px-0 py-138 text-right">
+        <div className="flex flex-row-reverse gap-64 px-0 text-right py-138">
           <Image
             width={588}
             height={444}
@@ -94,10 +94,10 @@ const Home = () => {
         </h1>
       </div>
       <footer className="h-160 bg-[#111322]">
-        <div className="flex justify-between px-200 pb-104 pt-32">
+        <div className="flex justify-between pt-32 px-200 pb-104">
           <h4>©codeit - 2024</h4>
 
-          <div className="flex gap-30 text-gray-100">
+          <div className="flex text-gray-100 gap-30">
             <a href="/privacy">Privacy Policy</a>
             <a href="/faq">FAQ</a>
           </div>
