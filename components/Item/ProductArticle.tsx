@@ -25,20 +25,21 @@ const ProductArticle = () => {
   if (!product) return null;
 
   return (
-    <div className="md: flex flex-col gap-24 md:flex-row md:gap-13 xl:gap-24">
-      <div className="md:h-340 xl:w-486 xl:h-486 rounded-12 md:w-340">
+    <div className="flex flex-col gap-24 md: md:flex-row md:gap-13 xl:gap-24">
+      <div className="md:h-340 md:w-340 xl:h-486 xl:w-486">
         <Image
           layout="responsive"
+          className="rounded-12"
           width={343}
           height={343}
           src={product.images[0]}
           alt="상품 이미지"
         />
       </div>
-      <div className="flex flex-1 flex-col gap-24">
-        <div className="border-gray-20 gap-4 border-b border-solid pb-12">
+      <div className="flex flex-col flex-1 gap-24">
+        <div className="gap-4 pb-12 border-b border-solid border-gray-20">
           <div className="flex justify-between">
-            <div className="text-black-800 text-20 font-semibold leading-[32px]">
+            <div className="text-20 font-semibold leading-[32px] text-black-800">
               {product.name}
             </div>
             <Image
@@ -48,26 +49,26 @@ const ProductArticle = () => {
               alt="케밥아이콘"
             />
           </div>
-          <div className="text-black-800 text-32 font-semibold leading-[42px]">
+          <div className="text-32 font-semibold leading-[42px] text-black-800">
             {product.price}
           </div>
         </div>
         <div className="flex flex-col gap-8">
-          <div className="text-gray-600 text-14 font-medium leading-[24px]">
+          <div className="text-14 font-medium leading-[24px] text-gray-600">
             상품 소개
           </div>
-          <pre className="text-black-800 whitespace-pre-wrap text-16 font-normal leading-[26px]">
+          <pre className="whitespace-pre-wrap text-16 font-normal leading-[26px] text-black-800">
             {product.description}
           </pre>
         </div>
         <div className="flex flex-col gap-8">
-          <div className="text-gray-600 text-14 font-medium leading-[17px]">
+          <div className="text-14 font-medium leading-[17px] text-gray-600">
             상품 태그
           </div>
-          <div className="flex h-max w-max gap-8">
+          <div className="flex gap-8 h-max w-max">
             {product.tags.map((tag) => (
               <div
-                className="bg-gray-10 text-black-800 rounded-26 px-16 py-6 text-16 font-normal leading-[24px]"
+                className="rounded-26 bg-gray-10 px-16 py-6 text-16 font-normal leading-[24px] text-black-800"
                 key={tag}
               >
                 {tag}
@@ -75,11 +76,11 @@ const ProductArticle = () => {
             ))}
           </div>
         </div>
-        <div className="border-gray-20 flex h-40 w-max items-center gap-4 rounded-35 border border-solid px-12 py-4">
-          <div className="relative h-32 w-32">
+        <div className="flex items-center h-40 gap-4 px-12 py-4 border border-solid w-max rounded-35 border-gray-20">
+          <div className="relative w-32 h-32">
             <Image src="/images/ic_heart.svg" fill alt="좋아요아이콘" />
           </div>
-          <div className="text-gray-500 text-16 font-medium leading-[26px]">
+          <div className="text-16 font-medium leading-[26px] text-gray-500">
             {product.favoriteCount}
           </div>
         </div>
