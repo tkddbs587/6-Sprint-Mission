@@ -3,9 +3,12 @@ import FileInput from "./FileInput";
 import { ChangeEvent, SyntheticEvent, useState } from "react";
 import { useRouter } from "next/router";
 import { postProduct } from "@/api/products/products";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { ProductForm } from "@/types/product";
 
 const UploadProducts = () => {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const [values, setValues] = useState({
     images: "",
     tags: [""],
@@ -34,10 +37,17 @@ const UploadProducts = () => {
     }));
   };
 
+  const uploadProductMutation = useMutation({
+    mutationFn: (values: ProductForm) => postProduct(values),
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["product"] });
+      router.push(`/items/${data.id}`);
+    },
+  });
+
   const handleFormSubmit = async (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const data = await postProduct(values);
-    data.id && router.push(`/items/${data.id}`);
+    uploadProductMutation.mutate(values);
   };
 
   return (

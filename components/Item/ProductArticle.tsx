@@ -1,27 +1,26 @@
 import getProduct from "@/api/products/product";
-import Product from "@/types/product";
+import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
 
 const ProductArticle = () => {
-  const [product, setProduct] = useState<Product>();
   const router = useRouter();
   const { query, isReady } = router;
+  const productId = Number(query.productId);
 
-  useEffect(() => {
-    if (isReady) {
-      const productId = Number(query.productId);
-      const loadProduct = async () => {
-        const data = await getProduct(productId);
-        setProduct(data);
-      };
-      if (!isNaN(productId)) {
-        loadProduct();
-      }
-    }
-  }, [isReady, query.productId]);
+  const {
+    data: product,
+    isPending,
+    isError,
+  } = useQuery({
+    queryKey: ["product", productId],
+    queryFn: () => getProduct(productId),
+    enabled: isReady && !isNaN(productId),
+    staleTime: 60 * 1000,
+  });
 
+  if (isPending) return <div>로딩 중입니다...</div>;
+  if (isError) return <div>상품을 불러오는데 실패했습니다.</div>;
   if (!product) return null;
 
   return (
@@ -66,7 +65,7 @@ const ProductArticle = () => {
             상품 태그
           </div>
           <div className="flex gap-8 h-max w-max">
-            {product.tags.map((tag) => (
+            {product.tags.map((tag: string) => (
               <div
                 className="rounded-26 bg-gray-10 px-16 py-6 text-16 font-normal leading-[24px] text-black-800"
                 key={tag}
