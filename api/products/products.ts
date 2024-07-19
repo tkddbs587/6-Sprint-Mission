@@ -30,3 +30,7 @@ export const patchProduct = async ({
 }) => {
   const res = await axios.patch(`products/${productId}`, values);
 };
+
+export const deleteProduct = async (productId: number) => {
+  await axios.delete(`products/${productId}`);
+};

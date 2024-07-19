@@ -1,5 +1,5 @@
 import getProduct from "@/api/products/product";
-import { patchProduct } from "@/api/products/products";
+import { deleteProduct, patchProduct } from "@/api/products/products";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -55,6 +55,14 @@ const ProductArticle = () => {
     },
   });
 
+  const deleteProductMutation = useMutation({
+    mutationFn: (productId: number) => deleteProduct(productId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["products"] });
+      router.push("/items");
+    },
+  });
+
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
     uploadProductMutation.mutate({ productId, values: newValues });
@@ -66,6 +74,10 @@ const ProductArticle = () => {
 
   const handleEditProduct = () => {
     setIsEdit(!isEdit);
+  };
+
+  const handleDeleteProduct = () => {
+    deleteProductMutation.mutate(productId);
   };
 
   const handleNewValueChange = (
@@ -126,7 +138,7 @@ const ProductArticle = () => {
                   수정하기
                 </div>
                 <div
-                  // onClick={handleDeleteComment}
+                  onClick={handleDeleteProduct}
                   className="cursor-pointer px-8 py-4 text-black-900 flex-center hover:rounded-4 hover:bg-skyblue md:px-12"
                 >
                   삭제하기
