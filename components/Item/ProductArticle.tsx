@@ -1,9 +1,11 @@
 import getProduct from "@/api/products/product";
 import { deleteProduct, patchProduct } from "@/api/products/products";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import axios from "@/lib/axios";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
+import HeartIcon from "@/public/images/ic_heart.svg";
 
 const ProductArticle = () => {
   const router = useRouter();
@@ -63,6 +65,17 @@ const ProductArticle = () => {
     },
   });
 
+  const toggleFavoriteMutation = useMutation({
+    mutationFn: (isFavorite: boolean) => {
+      return isFavorite
+        ? axios.delete(`/products/${productId}/favorite`)
+        : axios.post(`/products/${productId}/favorite`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["product", productId] });
+    },
+  });
+
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
     uploadProductMutation.mutate({ productId, values: newValues });
@@ -78,6 +91,10 @@ const ProductArticle = () => {
 
   const handleDeleteProduct = () => {
     deleteProductMutation.mutate(productId);
+  };
+
+  const handleHeartVisible = () => {
+    toggleFavoriteMutation.mutate(product.isFavorite);
   };
 
   const handleNewValueChange = (
@@ -194,11 +211,21 @@ const ProductArticle = () => {
           </div>
         </div>
         <div className="flex">
-          <div className="flex h-40 w-max items-center gap-4 rounded-35 border border-solid border-gray-20 px-12 py-4">
+          <div
+            onClick={handleHeartVisible}
+            className="flex h-40 w-max cursor-pointer items-center gap-4 rounded-35 border border-solid border-gray-20 px-12 py-4"
+          >
             <div className="relative h-32 w-32">
-              <Image src="/images/ic_heart.svg" fill alt="좋아요아이콘" />
+              <HeartIcon
+                color={`${product.isFavorite ? "#3692ff" : "white"}`}
+                stroke={`${product.isFavorite ? "#3692ff" : "#6B7280"}`}
+                width={32}
+                height={32}
+              />
             </div>
-            <div className="text-16 font-medium leading-[26px] text-gray-500">
+            <div
+              className={`${product.isFavorite ? "text-blue" : "text-gray-500"} text-16 font-medium leading-[26px]`}
+            >
               {product.favoriteCount}
             </div>
           </div>
