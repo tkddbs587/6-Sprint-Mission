@@ -20,3 +20,13 @@ export const postProduct = async (values: ProductForm) => {
   const res = await axios.post(`products`, values);
   return res.data;
 };
+
+export const patchProduct = async ({
+  productId,
+  values,
+}: {
+  productId: number;
+  values: any;
+}) => {
+  const res = await axios.patch(`products/${productId}`, values);
+};
